@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
 import { pathExistsSync, writeFile } from 'fs-extra'
 import { join, parse } from 'path'
-import { resolve } from 'path/posix'
+import { resolve } from 'path'
 import { Readable } from 'stream'
 import { parseM3ToXMindFile } from '../lib/m3-to-xmind'
 import { convertToSVGByBrowser, getBrowserInstance, parseM3ToSVGFile } from '../lib/m3-to-svg'
