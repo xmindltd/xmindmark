@@ -14,7 +14,6 @@
     "serve": "tsc --watch --sourceMap",
     "build": "tsc",
     "test": "rimraf ./dist/src && npm run build && mocha --recursive --color dist/**/*.spec.js",
-    "postinstall": "npm run build",
     "prepublish": "rimraf ./dist/src && npm run build"
   },
   "keywords": [
@@ -33,6 +32,10 @@
     {
       "name": "xmind_official",
       "email": "npm@xmind.net"
+    },
+    {
+      "name": "parrotdance",
+      "email": "parrotdance95@gmail.com"
     }
   ],
   "license": "MIT",
