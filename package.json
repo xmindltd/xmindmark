@@ -7,14 +7,15 @@
   },
   "main": "./dist/src/index.js",
   "files": [
-    "dist/**/*"
+    "dist/src/**/*"
   ],
   "types": "./dist/index.d.ts",
   "scripts": {
     "serve": "tsc --watch --sourceMap",
     "build": "tsc",
     "test": "rimraf ./dist/src && npm run build && mocha --recursive --color dist/**/*.spec.js",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "prepublish": "rimraf ./dist/src && npm run build"
   },
   "keywords": [
     "m3",
