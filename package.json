@@ -14,7 +14,7 @@
     "serve": "tsc --watch --sourceMap",
     "build": "tsc",
     "test": "rimraf ./dist/src && npm run build && mocha --recursive --color dist/**/*.spec.js",
-    "prepublish": "rimraf ./dist/src && npm run build"
+    "prepublishOnly": "rimraf ./dist/src && npm run build"
   },
   "keywords": [
     "m3",
