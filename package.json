@@ -8,7 +8,7 @@
   "main": "./dist/src/index.js",
   "files": [
     "dist/src/**/*",
-    "dist/src/package.json"
+    "dist/package.json"
   ],
   "types": "./dist/index.d.ts",
   "scripts": {
