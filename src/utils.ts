@@ -1,7 +1,6 @@
 import { ensureFileSync, fstat, readFileSync, writeFileSync } from 'fs-extra'
-import { metaCacheFile } from './config'
+import { issueUrl, metaCacheFile } from './config'
 import { Platform } from 'puppeteer-core'
-import packageJSON from '../package.json'
 import { Readable } from 'stream'
 
 export enum SUPPORT_FORMAT {
@@ -91,5 +90,5 @@ to clear the dependencies cache of M3, then try
 
   ${['m3', ...process.argv.slice(2)].join(' ')}
 
-again. If it still happens, please report issue at: ${packageJSON.bugs.url}`) 
+again. If it still happens, please report issue at: ${issueUrl}`) 
 }

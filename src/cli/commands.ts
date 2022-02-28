@@ -1,11 +1,10 @@
 import { Command } from 'commander'
 import { ensureDirSync, removeSync } from 'fs-extra'
 import { resolve } from 'path'
-import { cacheDir } from '../config'
+import { cacheDir, version } from '../config'
 import { hasContentPipedIn } from '../utils'
 import { convert, Convertion, getConverterByFormat } from './convertion'
 import { CLIOptions, formatOption, outputOption } from './options'
-import pkgJSON from '../../package.json'
 import { filesArgument } from './arguments'
 
 export function resetActionHandler() {
@@ -42,7 +41,7 @@ export async function mainActionHandler(files: string[], options: CLIOptions) {
 }
 
 export const mainCommand = new Command()
-  .version(pkgJSON.version, '-v', '--version')
+  .version(version, '-v', '--version')
   .usage('[subCommand] [options] [file]')
   .addArgument(filesArgument)
   .addOption(formatOption)
