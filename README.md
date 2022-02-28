@@ -32,7 +32,7 @@ Seasons
 ```
 you can easily convert it to a graphical mind map using [xmind-m3](https://github.com/xmindltd/m3):
 
-![seasons.svg](docs/seasons.png)
+![seasons.svg](docs/seasons.svg)
 
 See also:
 - [Use xmind-m3 as a CLI program](#use-xmind-m3-as-a-cli-program)
