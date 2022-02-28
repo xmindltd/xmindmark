@@ -1,0 +1,6 @@
+node_modules/
+temp/
+temp-*
+.cache
+.DS_Store
+dist

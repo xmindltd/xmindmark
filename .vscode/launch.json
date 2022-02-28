@@ -1,0 +1,40 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/dist/src/cli/index.js",
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}",
+      "args": [
+        // edit your args here to debug
+      ],
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ]
+    },
+    {
+			"name": "Test single .ts file",
+			"type": "pwa-node",
+			"program": "${workspaceFolder}/node_modules/mocha/bin/mocha",
+			"request": "launch",
+			"args": [
+        "--debug-brk",
+        "--inspect",
+        "--color",
+				"${workspaceFolder}/dist/${relativeFileDirname}/${fileBasenameNoExtension}.js"
+			],
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+		}
+  ]
+}

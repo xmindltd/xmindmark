@@ -1,0 +1,54 @@
+{
+  "name": "xmind-m3",
+  "version": "0.1.0",
+  "description": "Lightweight markup language for mind mapping, with a toolset to make it easy to use.",
+  "bin": {
+    "m3": "./dist/src/cli/index.js"
+  },
+  "main": "./dist/src/index.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "serve": "tsc --watch --sourceMap",
+    "build": "tsc",
+    "test": "rimraf ./dist/src && npm run build && mocha --recursive --color dist/**/*.spec.js",
+    "postinstall": "npm run build"
+  },
+  "keywords": [
+    "m3",
+    "xmind"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xmindltd/m3"
+  },
+  "bugs": {
+    "url": "https://github.com/xmindltd/m3/issues"
+  },
+  "author": "XMind ltd.",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^8.3.0",
+    "fs-extra": "^10.0.0",
+    "jszip": "^3.7.1",
+    "nanoid": "^3.1.30",
+    "puppeteer-core": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/commander": "^2.12.2",
+    "@types/fs-extra": "^9.0.13",
+    "@types/jszip": "^3.4.1",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.11.6",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "joi": "^17.4.2",
+    "mocha": "^9.1.3",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.4"
+  }
+}
