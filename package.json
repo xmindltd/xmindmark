@@ -28,6 +28,12 @@
     "url": "https://github.com/xmindltd/m3/issues"
   },
   "author": "XMind ltd.",
+  "maintainers": [
+    {
+      "name": "xmind_official",
+      "email": "npm@xmind.net"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "commander": "^8.3.0",
