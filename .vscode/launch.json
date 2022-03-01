@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/dist/src/cli/index.js",
+      "program": "${workspaceFolder}/dist/cli/index.js",
       "sourceMaps": true,
       "cwd": "${workspaceFolder}",
       "args": [
