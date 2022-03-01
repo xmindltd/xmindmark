@@ -3,9 +3,9 @@
   "version": "0.1.9",
   "description": "Lightweight markup language for mind mapping, with a toolset to make it easy to use.",
   "bin": {
-    "m3": "./dist/src/cli/index.js"
+    "m3": "./dist/cli/index.js"
   },
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "files": [
     "dist/**/*"
   ],
@@ -13,7 +13,7 @@
   "scripts": {
     "serve": "tsc --watch --sourceMap",
     "build": "tsc",
-    "test": "rimraf ./dist/src && npm run build && mocha --recursive --color dist/**/*.spec.js",
+    "test": "rimraf ./dist && npm run build && mocha --recursive --color dist/**/*.spec.js",
     "prepublishOnly": "rimraf ./dist && npm run build"
   },
   "keywords": [
