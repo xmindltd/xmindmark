@@ -1,4 +1,4 @@
-import { createMap, addTopic, addRelationship, addSingleBoundary, addSingleSummary } from './mindmap'
+import { createMap, addTopic, addRelationship, addSingleBoundary, addSingleSummary, setTheme } from './mindmap'
 
 
 const topicRE = /^(\s*)[-*]\s+/
@@ -188,5 +188,6 @@ export function createMapByM3(raw = 'Central Topic'): any {
     addRelationship(map, source, status.numberedTopics[number], { title })
   })
 
+  setTheme(map)
   return map
 }
