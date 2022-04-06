@@ -3,7 +3,7 @@ import { SUPPORT_FORMAT } from '../utils'
 
 export const formatOption = new Option(
   '-f, --format <format>',
-  'The target format which .m3 file transform into.'
+  'The target format which .xmindmark file transform into.'
 ).choices([SUPPORT_FORMAT.XMIND, SUPPORT_FORMAT.SVG])
   .default(SUPPORT_FORMAT.XMIND)
 

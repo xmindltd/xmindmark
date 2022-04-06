@@ -1,1 +1,1 @@
-export { parseM3ToXMindFile } from './lib/m3-to-xmind'
+export { parseXMindMarkToXMindFile } from './lib/xmindmark-to-xmind'

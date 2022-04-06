@@ -5,7 +5,7 @@ import { Readable } from 'stream'
 
 export const tempFileDirForTest = join(__dirname, 'temp')
 
-export const CLI_NAME = 'm3'
+export const CLI_NAME = 'xmindmark'
 
 export const ensureTempFileDirExist = () => ensureDirSync(tempFileDirForTest)
 

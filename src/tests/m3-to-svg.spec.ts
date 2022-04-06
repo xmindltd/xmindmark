@@ -1,34 +1,34 @@
 import { expect } from 'chai'
-import { ensureFileSync, readFileSync, removeSync, writeFileSync } from 'fs-extra'
+import { ensureFileSync, removeSync, writeFileSync } from 'fs-extra'
 import { join } from 'path'
-import { parseM3ToSVGFile } from '../lib/m3-to-svg'
+import { parseXMindMarkToSVGFile } from '../lib/xmindmark-to-svg'
 
-const m3FileName = `sample.m3`
-const m3FilePath = join(__dirname, m3FileName)
-const m3FileContent = `Central Topic\n- Main Topic 1\n`
+const xmindMarkFileName = `sample.xmindmark`
+const xmindMarkFilePath = join(__dirname, xmindMarkFileName)
+const xmindMarkFileContent = `Central Topic\n- Main Topic 1\n`
 
-describe('M3: convert to svg', () => {
+describe('XMindMark: convert to svg', () => {
   before(() => {
-    ensureFileSync(m3FilePath)
-    writeFileSync(m3FilePath, m3FileContent)
+    ensureFileSync(xmindMarkFilePath)
+    writeFileSync(xmindMarkFilePath, xmindMarkFileContent)
   })
   after(() => {
-    removeSync(m3FilePath)
+    removeSync(xmindMarkFilePath)
   })
   
-  it('can parsed M3 content to svg file', async () => {
+  it('can parsed XMindMark content to svg file', async () => {
     let browserMakerFnCalled = false
     let svgConverterFnCalled = false
     let afterConvertionFnCalled = false
     
-    const outputSVGContent = await parseM3ToSVGFile(m3FileContent, {
+    const outputSVGContent = await parseXMindMarkToSVGFile(xmindMarkFileContent, {
       browserMaker: () => {
         browserMakerFnCalled = true
         return Promise.resolve({} as any)
       },
       svgConverter: () => {
         svgConverterFnCalled = true
-        return Promise.resolve(m3FileContent)
+        return Promise.resolve(xmindMarkFileContent)
       },
       afterConvertion: () => {
         afterConvertionFnCalled = true
@@ -39,6 +39,6 @@ describe('M3: convert to svg', () => {
     expect(browserMakerFnCalled).to.be.true
     expect(svgConverterFnCalled).to.be.true
     expect(afterConvertionFnCalled).to.be.true
-    expect(new TextDecoder().decode(outputSVGContent, )).to.equal(m3FileContent)
+    expect(new TextDecoder().decode(outputSVGContent, )).to.equal(xmindMarkFileContent)
   })
 })

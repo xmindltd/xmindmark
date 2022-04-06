@@ -3,23 +3,23 @@ import { pathExistsSync, writeFile } from 'fs-extra'
 import { join, parse } from 'path'
 import { resolve } from 'path'
 import { Readable } from 'stream'
-import { parseM3ToXMindFile } from '../lib/m3-to-xmind'
-import { convertToSVGByBrowser, getBrowserInstance, parseM3ToSVGFile } from '../lib/m3-to-svg'
+import { parseXMindMarkToXMindFile } from '../lib/xmindmark-to-xmind'
+import { convertToSVGByBrowser, getBrowserInstance, parseXMindMarkToSVGFile } from '../lib/xmindmark-to-svg'
 import { getFileNameFromContent, readStringFromStream, SUPPORT_FORMAT } from '../utils'
 
-export type ConverterFn = (m3FileContent: string) => Promise<ArrayBuffer>
+export type ConverterFn = (xmindMarkFileContent: string) => Promise<ArrayBuffer>
 
 export type Convertion = {
-  m3FilePath?: string
-  m3ReadableStream?: Readable
+  xmindMarkFilePath?: string
+  xmindMarkReadableStream?: Readable
   outputDir: string
   outputFormat: SUPPORT_FORMAT
   converter: ConverterFn
 }
 
-export const xmindConverter: ConverterFn = async (m3FileContent) => await parseM3ToXMindFile(m3FileContent)
+export const xmindConverter: ConverterFn = async (xmindMarkFileContent) => await parseXMindMarkToXMindFile(xmindMarkFileContent)
 
-export const svgConverter: ConverterFn = async (m3FilePath) => await parseM3ToSVGFile(m3FilePath, {
+export const svgConverter: ConverterFn = async (xmindMarkFilePath) => await parseXMindMarkToSVGFile(xmindMarkFilePath, {
   browserMaker: getBrowserInstance,
   svgConverter: convertToSVGByBrowser,
   afterConvertion: async (browser) => await browser.close()
@@ -34,25 +34,25 @@ export const getConverterByFormat = (format: SUPPORT_FORMAT): ConverterFn => {
 }
 
 export async function convert(payloads: Convertion[]) {
-  const tasks = payloads.map(({ m3FilePath, m3ReadableStream, outputDir, outputFormat, converter }) => {
+  const tasks = payloads.map(({ xmindMarkFilePath, xmindMarkReadableStream, outputDir, outputFormat, converter }) => {
     return (async () => {
-      let m3FileContent: string
+      let xmindMarkFileContent: string
   
-      if (m3FilePath) {
-        if (!pathExistsSync(m3FilePath)) {
-          console.error(`Can not resolve file ${resolve(m3FilePath)}`)
+      if (xmindMarkFilePath) {
+        if (!pathExistsSync(xmindMarkFilePath)) {
+          console.error(`Can not resolve file ${resolve(xmindMarkFilePath)}`)
           return
         }
-        m3FileContent = readFileSync(m3FilePath, 'utf-8')
-      } else if (m3ReadableStream) {
-        m3FileContent = await readStringFromStream(m3ReadableStream)
+        xmindMarkFileContent = readFileSync(xmindMarkFilePath, 'utf-8')
+      } else if (xmindMarkReadableStream) {
+        xmindMarkFileContent = await readStringFromStream(xmindMarkReadableStream)
       } else {
-        throw new Error(`One of 'm3FilePath' and 'm3ReadableStream' must be passed`)
+        throw new Error(`One of 'xmindMarkFilePath' and 'xmindMarkReadableStream' must be passed`)
       }
   
-      const buffer = await converter(m3FileContent)
-      const m3FileName = m3FilePath ? parse(m3FilePath).name : getFileNameFromContent(m3FileContent)
-      const outputFilePath = join(outputDir, `${m3FileName}.${outputFormat}`)
+      const buffer = await converter(xmindMarkFileContent)
+      const xmindMarkFileName = xmindMarkFilePath ? parse(xmindMarkFilePath).name : getFileNameFromContent(xmindMarkFileContent)
+      const outputFilePath = join(outputDir, `${xmindMarkFileName}.${outputFormat}`)
       
       if (outputFilePath && pathExistsSync(outputFilePath)) {
         console.warn(`The file to be exported (${outputFilePath}) is exist, conversion has been skipped.`)

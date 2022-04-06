@@ -84,11 +84,11 @@ export function unexpedtedError(msg?: string) {
   console.error(msg ?? `
 Unexpected error occured, you can run
 
-  m3 reset
+  xmindmark reset
 
-to clear the dependencies cache of M3, then try
+to clear the dependencies cache of XMindMark, then try
 
-  ${['m3', ...process.argv.slice(2)].join(' ')}
+  ${['xmindmark', ...process.argv.slice(2)].join(' ')}
 
 again. If it still happens, please report issue at: ${issueUrl}`) 
 }

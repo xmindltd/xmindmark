@@ -13,7 +13,7 @@ export function resetActionHandler() {
 }
 
 export const resetCommand = new Command('reset')
-  .description('Reset the cache data which m3 convertion process dependents on.')
+  .description('Reset the cache data which xmindmark convertion process dependents on.')
   .action(resetActionHandler)
 
 export async function mainActionHandler(files: string[], options: CLIOptions) {
@@ -23,14 +23,14 @@ export async function mainActionHandler(files: string[], options: CLIOptions) {
 
   if (await hasContentPipedIn()) {
     convertions = [{
-      m3ReadableStream: process.stdin,
+      xmindMarkReadableStream: process.stdin,
       outputDir,
       outputFormat: format,
       converter: getConverterByFormat(format)
     }]
   } else {
     convertions = files.map(filePath => ({
-      m3FilePath: resolve(filePath),
+      xmindMarkFilePath: resolve(filePath),
       outputDir,
       outputFormat: format,
       converter: getConverterByFormat(format)

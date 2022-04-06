@@ -1,9 +1,9 @@
 {
-  "name": "xmind-m3",
+  "name": "xmindmark",
   "version": "0.2.1",
   "description": "Lightweight markup language for mind mapping, with a toolset to make it easy to use.",
   "bin": {
-    "m3": "./dist/cli/index.js"
+    "xmindmark": "./dist/cli/index.js"
   },
   "main": "./dist/index.js",
   "files": [
@@ -17,15 +17,15 @@
     "prepublishOnly": "rimraf ./dist && npm run build"
   },
   "keywords": [
-    "m3",
+    "xmindmark",
     "xmind"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xmindltd/m3"
+    "url": "https://github.com/xmindltd/xmindmark"
   },
   "bugs": {
-    "url": "https://github.com/xmindltd/m3/issues"
+    "url": "https://github.com/xmindltd/xmindmark/issues"
   },
   "author": "XMind ltd.",
   "maintainers": [

@@ -22,7 +22,7 @@ new Promise((resolve) => {
   exportSvg: () => `sb.exportImage({ format: 'SVG', skipFont: false }).then(res => res.data)`
 }
 
-export async function parseM3ToSVGFile(
+export async function parseXMindMarkToSVGFile(
   m3FileContent: string,
   executor: {
     browserMaker: () => Promise<Browser>,

@@ -1,6 +1,6 @@
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import { existsSync, readdirSync, removeSync, writeFileSync } from 'fs-extra'
+import { readdirSync, removeSync, writeFileSync } from 'fs-extra'
 import { join } from 'path'
 import { getFileNameFromContent, SUPPORT_FORMAT } from '../utils'
 import { ensureTempFileDirExist, makeReadableStringStream, tempFileDirForTest } from './utils'
@@ -14,13 +14,13 @@ const sampleFileName = 'sample'
 const sampleFilePath = join(tempFileDirForTest, sampleFileName)
 const sampleFileContent = 'Central topic'
 
-const ensureSampleM3File = () => writeFileSync(sampleFilePath, sampleFileContent)
+const ensureSampleXMindMarkFile = () => writeFileSync(sampleFilePath, sampleFileContent)
 const clearTempFiles = () => removeSync(tempFileDirForTest)
 
 describe('CLI functions', () => {
   beforeEach(() => {
     ensureTempFileDirExist()
-    ensureSampleM3File()
+    ensureSampleXMindMarkFile()
   })
 
   afterEach(() => {
@@ -45,21 +45,21 @@ describe('CLI functions', () => {
     })
     
     const xmindConvertion: Convertion = {
-      m3FilePath: sampleFilePath,
+      xmindMarkFilePath: sampleFilePath,
       outputDir: tempFileDirForTest,
       outputFormat: SUPPORT_FORMAT.XMIND,
       converter: fakeXMindConverter
     }
 
     const svgConvertion: Convertion = {
-      m3FilePath: sampleFilePath,
+      xmindMarkFilePath: sampleFilePath,
       outputDir: tempFileDirForTest,
       outputFormat: SUPPORT_FORMAT.SVG,
       converter: fakeSvgConverter
     }
 
     const streamConvertion: Convertion = {
-      m3ReadableStream: makeReadableStringStream(sampleFileContent),
+      xmindMarkReadableStream: makeReadableStringStream(sampleFileContent),
       outputDir: tempFileDirForTest,
       outputFormat: SUPPORT_FORMAT.XMIND,
       converter: fakeXMindConverter

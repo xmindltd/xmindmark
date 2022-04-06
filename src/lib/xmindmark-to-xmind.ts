@@ -19,7 +19,7 @@ function createMetadataJson() {
   return JSON.stringify({})
 }
 
-export async function parseM3ToXMindFile(m3Content: string): Promise<ArrayBuffer> {
+export async function parseXMindMarkToXMindFile(m3Content: string): Promise<ArrayBuffer> {
   const sheetModel = createMapByM3(m3Content)
   const xmindFolder = {
     'content.json': createContentJson(sheetModel),
