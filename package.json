@@ -1,6 +1,6 @@
 {
   "name": "xmind-m3",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lightweight markup language for mind mapping, with a toolset to make it easy to use.",
   "bin": {
     "m3": "./dist/cli/index.js"
