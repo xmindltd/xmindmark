@@ -1,10 +1,10 @@
-import { createMapByM3 } from './mindmark'
+import { createMapByXMindMark } from './mindmark'
 import { strictEqual } from 'assert'
 
 describe('1.1 - Basic tests for Central Topics', () => {
 
     it('Only Central Topic', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 only central topic
 
@@ -13,7 +13,7 @@ only central topic
     })
 
     it('Indented Central Topic', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
     \tindented central topic
 
@@ -26,7 +26,7 @@ only central topic
 describe('1.2 - Basic tests for Main Topics', () => {
 
     it('2 Main Topics', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 - main topic 1
@@ -40,7 +40,7 @@ central topic
     })
 
     it('2 Main Topics with empty line', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 
@@ -56,7 +56,7 @@ central topic
     })
 
     it('2 Main Topics with *', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 
@@ -71,7 +71,7 @@ central topic
     })
 
     it('2 Main Topics with different indicator', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 
@@ -90,7 +90,7 @@ central topic
 describe('1.3 - Basic tests for more levels of topics', () => {
 
     it('2 Main Topics with different indicator', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 Central Topic
 

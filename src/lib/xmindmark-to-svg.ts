@@ -1,5 +1,5 @@
 import { Browser } from 'puppeteer-core'
-import { createMapByM3 } from '../parser/mindmark'
+import { createMapByXMindMark } from '../parser/mindmark'
 import { initBrowser } from './browser'
 import { initRenderEngine } from './render-engine'
 
@@ -23,15 +23,15 @@ new Promise((resolve) => {
 }
 
 export async function parseXMindMarkToSVGFile(
-  m3FileContent: string,
+  xmindMarkFileContent: string,
   executor: {
     browserMaker: () => Promise<Browser>,
-    svgConverter: (browser: Browser, m3FileContent: string) => Promise<string>,
+    svgConverter: (browser: Browser, xmindMarkFileContent: string) => Promise<string>,
     afterConvertion?: (browser: Browser) => Promise<void>
   }
 ): Promise<ArrayBuffer> {
   const browser = await executor.browserMaker()
-  const svg = await executor.svgConverter(browser, m3FileContent)
+  const svg = await executor.svgConverter(browser, xmindMarkFileContent)
   executor.afterConvertion?.(browser)
 
   return new TextEncoder().encode(svg)
@@ -47,8 +47,8 @@ export async function getBrowserInstance(): Promise<Browser> {
   return browser
 }
 
-export async function convertToSVGByBrowser(browser: Browser, m3FileContent: string): Promise<string> {
-  const sheetmodel = createMapByM3(m3FileContent)
+export async function convertToSVGByBrowser(browser: Browser, xmindMarkFileContent: string): Promise<string> {
+  const sheetmodel = createMapByXMindMark(xmindMarkFileContent)
   const renderEngineFile = await initRenderEngine()
 
   const page = await browser.newPage()

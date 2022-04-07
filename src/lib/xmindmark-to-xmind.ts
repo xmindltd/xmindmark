@@ -1,4 +1,4 @@
-import { createMapByM3 } from '../parser/mindmark'
+import { createMapByXMindMark } from '../parser/mindmark'
 import JSZip from 'jszip'
 import { SheetModel } from '../types'
 
@@ -19,8 +19,8 @@ function createMetadataJson() {
   return JSON.stringify({})
 }
 
-export async function parseXMindMarkToXMindFile(m3Content: string): Promise<ArrayBuffer> {
-  const sheetModel = createMapByM3(m3Content)
+export async function parseXMindMarkToXMindFile(xmindMarkFileContent: string): Promise<ArrayBuffer> {
+  const sheetModel = createMapByXMindMark(xmindMarkFileContent)
   const xmindFolder = {
     'content.json': createContentJson(sheetModel),
     'manifest.json': createManifestJson(),

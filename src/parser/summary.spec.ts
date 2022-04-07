@@ -1,10 +1,10 @@
-import { createMapByM3 } from './mindmark'
+import { createMapByXMindMark } from './mindmark'
 import { strictEqual } from 'assert'
 
 describe('4.1 - Summary', () => {
 
     it('Basic Summary', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 
@@ -23,7 +23,7 @@ central topic
     })
 
     it('Summary with numbers', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 
@@ -43,7 +43,7 @@ central topic
     })
 
     it('Multi Boundaries', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 
@@ -75,7 +75,7 @@ central topic
 describe('4.2 - Summary topic has subtopics', () => {
 
     it('Subtopics', () => {
-        let map = createMapByM3(`
+        let map = createMapByXMindMark(`
 
 central topic
 

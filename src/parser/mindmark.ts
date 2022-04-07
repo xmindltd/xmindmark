@@ -156,7 +156,7 @@ function addLine(line: string, status: any) {
   }
 }
 
-export function createMapByM3(raw = 'Central Topic'): any {
+export function createMapByXMindMark(raw = 'Central Topic'): any {
   const lines = raw.trim().split('\n')
 
   /// The First Line must be Central Topic
