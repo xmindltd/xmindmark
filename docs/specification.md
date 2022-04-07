@@ -1,6 +1,6 @@
 # Introduction
 
-M3 is a lightweight markup language for **mind mapping** inspired by **markdown**. It is designed to present structures and elements of a mind map easily. And we usually write it by plain text in files which has .m3 extension name.
+XMindMark is a lightweight markup language for **mind mapping** inspired by **markdown**. It is designed to present structures and elements of a mind map easily. And we usually write it by plain text in files which has `.xmindmark` extension name.
 
 However, if you're not familiar with core concepts of Mind Map yet, you might need:
 - [Explore and try XMind](https://www.xmind.net) - the most professional and popular mind mapping tool.
@@ -10,7 +10,7 @@ However, if you're not familiar with core concepts of Mind Map yet, you might ne
 
 ## Central Topic
 
-The first line of M3 will be considered as central topic, any empty lines before will be ignored.
+The first line of XMindMark will be considered as central topic, any empty lines before will be ignored.
 
 ```
 Central Topic
@@ -164,7 +164,7 @@ In this example, we described a relationship connects "main topic" with a bounda
 
 Similar to [Boundary](#Boundary), we describe Summary by `[S<number?>]`. 
 
-Logically, Summary is also a topic, if you forgot edit title for your summary topic by  `[S<number?>]: ...`, We will create a default topic for you. This will reflected in the [XMind](https://xmind.net/) file transformed by this M3 file.
+Logically, Summary is also a topic, if you forgot edit title for your summary topic by  `[S<number?>]: ...`, We will create a default topic for you. This will reflected in the [XMind](https://xmind.net/) file transformed by this XMindMark file.
 
 ```
 * topic 1 [S]
@@ -209,7 +209,7 @@ So you can perform [Boundary](#Boundary), [Relationship](#Relationship) with sum
 
 Every marker symbol of topic must be placed after topic content without any spaces. Like:
 
-```m3
+```
 
 Seasons of 2021
 
