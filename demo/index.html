@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XMindMark Demo</title>
+  <script src="https://assets.xmind.net/snowbrush/snowbrush-2.47.0.js"></script>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #result {
+      width: 1000px;
+      height: 1000px;
+    }
+    #convert {
+      margin: 8px 0;
+      background-color: #353179;
+      cursor: pointer;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      color: white;
+      transition: all .3s ease;
+    }
+    #convert:hover {
+      background-color: #000229;
+    }
+  </style>
+</head>
+<body>
+  <textarea id="content" cols="30" rows="10" placeholder="Input your minds here..."></textarea>
+  <div>
+    <button id="convert">Convert To XMind</button>
+  </div>
+  <div id="result"></div>
+</body>
+<script type="module" src="./src/main.ts"></script>
+</html>
