@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "vite": "^2.9.1"
+  },
+  "dependencies": {
+    "axios": "^0.26.1"
   }
 }

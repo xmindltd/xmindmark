@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+}
+code {
+  background-color: #ddd;
+  border-radius: 6px;
+  padding: 0 4px;
+  color: rgb(207, 30, 30);
+}
+#header {
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #00A99D;
+  font-style: italic;
+  color: white;
+}
+#body {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#content {
+  flex: 0 0 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-sizing: border-box;
+  padding: 10px 0 10px 10px;
+  font-size: 18px;
+}
+#file-select {
+  margin: 20px 0;
+}
+#input {
+  height: 900px;
+  border: 1px dashed #999999;
+  font-size: 16px;
+}
+#input:focus {
+  outline: 1px solid #999999;
+}
+#convert {
+  flex: 0 0 300px;
+  margin: 0 12px;
+  background-color: #353179;
+  cursor: pointer;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  transition: all .3s ease;
+}
+
+#convert:hover {
+  background-color: #000229;
+}
+
+#result {
+  flex: 1;
+  position: relative;
+  height: 1000px;
+  border: 1px dashed #999999;
+}
+.loading {
+  pointer-events: none;
+  background: linear-gradient(
+    45deg, 
+    #ccc 0, #ccc 25%, transparent 25%, transparent 50%, 
+    #ccc 50%, #ccc 75%, transparent 75%, transparent
+  );
+  background-size: 10px 10px;
+}
+#result.loading::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: 'Loading render engine...';
+  font-size: 36px;
+  color: black;
+}

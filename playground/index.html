@@ -5,42 +5,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>XMindMark Demo</title>
-  <script src="https://assets.xmind.net/snowbrush/snowbrush-2.47.0.js"></script>
-  <style>
-    body {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    #result {
-      width: 1000px;
-      height: 1000px;
-    }
-    #convert {
-      margin: 8px 0;
-      background-color: #353179;
-      cursor: pointer;
-      padding: 14px 20px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      color: white;
-      transition: all .3s ease;
-    }
-    #convert:hover {
-      background-color: #000229;
-    }
-  </style>
+  <link rel="stylesheet" href="./src/app.css">
 </head>
 <body>
-  <textarea id="content" cols="30" rows="10" placeholder="Input your minds here..."></textarea>
-  <div>
-    <button id="convert">Convert To XMind</button>
+  <div id="app">
+    <header id="header">
+      <div>XMindMark Playground</div>
+    </header>
+    <div id="body">
+      <div id="content">
+        <label for="file-select">Choose a <code>.xmindmark</code>, <code>.md</code> or <code>.txt</code> file</label>
+        <input type="file" name="file-select" id="file-select" accept=".xmindmark,.md,.txt" />
+        <textarea id="input" placeholder="Or edit your minds directly"></textarea>
+      </div>
+      <button id="convert">Convert To XMind 👉</button>
+      <div id="result"></div>
+    </div>
   </div>
-  <div id="result"></div>
 </body>
 <script type="module" src="./src/main.ts"></script>
 </html>
