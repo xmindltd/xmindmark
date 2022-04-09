@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "ts-node ./build.ts",
+    "preview": "yarn build && vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "ts-node": "^10.7.0",
     "vite": "^2.9.1"
   },
   "dependencies": {
