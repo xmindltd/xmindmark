@@ -10,6 +10,8 @@ const arrowAnimation = convert.animate([
   easing: 'ease',
   duration: 400
 })
+arrowAnimation.cancel()
+
 function playPointerAnimation() {
   arrowAnimation.cancel()
   arrowAnimation.play()

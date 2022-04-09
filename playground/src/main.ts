@@ -1,5 +1,4 @@
 import { parseXMindMarkToXMindFile } from '../../src'
-import { createMapByXMindMark } from '../../src/parser/mindmark'
 import { downloadFile, loadFileAsText } from './loader'
 import { loadExternalScript } from './loader'
 import { renderMapByString } from './map'
@@ -20,7 +19,7 @@ function initScript() {
     result.classList.remove('loading')
     convert.classList.remove('loading')
 
-    if (input.value) {
+    if (input.value.length > 0) {
       renderMapByString(input.value)
     }
   })
