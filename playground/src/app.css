@@ -4,10 +4,10 @@ body {
   --background: rgb(0, 169, 157);
 }
 code {
-  background-color: #ddd;
+  border: 1px solid var(--foreground);
   border-radius: 6px;
   padding: 0 4px;
-  color: rgb(207, 30, 30);
+  color: var(--foreground);
 }
 #app {
   height: 100vh;
@@ -41,9 +41,16 @@ code {
   box-sizing: border-box;
   padding: 10px 0 10px 10px;
   font-size: 18px;
+  line-height: 36px;
 }
-#file-select {
-  margin: 20px 0;
+#file-select-handler {
+  margin: 0;
+  text-align: center;
+  border-radius: 8px;
+  background-color: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+  user-select: none;
 }
 #input {
   flex: 1;
