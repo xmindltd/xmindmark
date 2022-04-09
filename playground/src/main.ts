@@ -23,6 +23,16 @@ function initView() {
   const input = document.getElementById('input') as HTMLTextAreaElement
   const convert = document.getElementById('convert') as HTMLButtonElement
   const result = document.getElementById('result') as HTMLDivElement
+
+  input.addEventListener('keydown', (e) => {
+    // Allow input tab in textarea
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      const startPos = input.selectionStart
+      input.value = input.value.substring(0, startPos) + '    ' + input.value.substring(input.selectionEnd)
+      input.selectionStart = startPos + 4
+    }
+  })
   
   convert.addEventListener('click', () => {
     result.innerHTML = ''
