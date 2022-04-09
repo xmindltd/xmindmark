@@ -13,7 +13,7 @@
   "scripts": {
     "serve": "tsc --watch --sourceMap",
     "build": "tsc",
-    "build:playground": "cd playground && yarn build",
+    "build:playground": "cd playground && yarn && yarn build",
     "test": "rimraf ./dist && npm run build && mocha --recursive --color dist/**/*.spec.js",
     "prepublishOnly": "rimraf ./dist && npm run build"
   },
