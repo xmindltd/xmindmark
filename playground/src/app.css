@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  --foreground: white;
+  --background: rgb(0, 169, 157);
 }
 code {
   background-color: #ddd;
@@ -16,9 +18,10 @@ code {
   font-size: 24px;
   line-height: 48px;
   font-weight: bold;
-  background-color: #00A99D;
+  background-color: var(--background);
   font-style: italic;
-  color: white;
+  color: var(--foreground);
+  user-select: none;
 }
 #body {
   box-sizing: border-box;
@@ -51,21 +54,34 @@ code {
   outline: 1px solid #999999;
 }
 #convert {
-  flex: 0 0 300px;
+  flex: 0;
   margin: 0 12px;
-  background-color: #353179;
+  padding: 8px;
   cursor: pointer;
-  padding: 14px 20px;
   border: none;
   border-radius: 8px;
-  font-size: 22px;
+  text-align: center;
+  font-size: 36px;
   font-weight: bold;
-  color: white;
   transition: all .3s ease;
+  user-select: none;
 }
-
+#download {
+  color: var(--background);
+  transition: color .3s ease;
+}
+#cursor {
+  transition: transform .3s ease;
+  transform: rotate(0);
+}
 #convert:hover {
-  background-color: #000229;
+  background-color: var(--background);
+}
+#convert:hover #cursor {
+  transform: rotate(90deg);
+}
+#convert:hover #download {
+  color: var(--foreground);
 }
 
 #result {
