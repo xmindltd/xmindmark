@@ -38,10 +38,14 @@ function initView() {
     result.innerHTML = ''
     
     const model = createMapByXMindMark(input.value)
-    new Snowbrush.SheetEditor({
+    const sb = new Snowbrush.SheetEditor({
       el: result,
       model: new Snowbrush.Model.Sheet(model)
-    }).initInnerView()
+    })
+    sb.on('SHEET_CONTENT_LOADED', () => {
+      sb.execAction('fitMap')
+    })
+    sb.initInnerView()
   })
 
   fileSelect.addEventListener('input', async () => {
