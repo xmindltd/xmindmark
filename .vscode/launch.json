@@ -35,6 +35,13 @@
 			"skipFiles": [
 				"<node_internals>/**"
 			],
-		}
+		},
+    {
+      "name": "Launch playground app",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/playground"
+    },
   ]
 }
