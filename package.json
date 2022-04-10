@@ -1,7 +1,7 @@
 {
   "name": "xmindmark",
   "version": "0.2.2",
-  "description": "Lightweight markup language for mind mapping, with a toolset to make it easy to use.",
+  "description": "A mind mapping markup language, compatible with markdown, convertable to/from xmind.",
   "bin": {
     "xmindmark": "./dist/cli/index.js"
   },
@@ -18,7 +18,11 @@
   },
   "keywords": [
     "xmindmark",
-    "xmind"
+    "xmind",
+    "markdown",
+    "mindmap",
+    "mind map",
+    "mind mapping"
   ],
   "repository": {
     "type": "git",
@@ -36,6 +40,10 @@
     {
       "name": "parrotdance",
       "email": "parrotdance95@gmail.com"
+    },
+    {
+      "name": "Brian Sun",
+      "email": "brian@xmind.net"
     }
   ],
   "license": "MIT",
