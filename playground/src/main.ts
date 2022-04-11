@@ -1,11 +1,8 @@
 import { parseXMindMarkToXMindFile } from '../../src'
-import { downloadFile, loadFileAsText } from './loader'
-import { loadExternalScript } from './loader'
+import { downloadFile, loadExternalScript, loadFileAsText } from './loader'
 import { renderMapByString } from './map'
-import * as monaco from 'monaco-editor'
 
 let openedFileName: string = ''
-let editor: monaco.editor.IStandaloneCodeEditor
 
 const renderEngineDownloadUrl = 'https://assets.xmind.net/snowbrush/snowbrush-2.47.0.js'
 
@@ -20,37 +17,33 @@ function initRenderEngine() {
     result.classList.remove('loading')
     convert.classList.remove('loading')
 
-    const existContent = editor.getValue()
+    const existContent = globalThis.editor?.getValue() ?? ''
     if (existContent.length > 0) {
       renderMapByString(existContent)
     }
   })
-
-  return
 }
 
 function initEditor() {
   const input = document.getElementById('input') as HTMLDivElement
+  input.classList.add('loading')
   
-  editor = monaco.editor.create(input, {
-    language: 'markdown',
-    wordWrap: 'on',
-    minimap: { enabled: false },
-    fontSize: 16,
-    // hide gutter aside line number
-    lineNumbers: 'on',
-    lineDecorationsWidth: 6,
-    lineNumbersMinChars: 0,
-    folding: false,
-    // hide vertical line of ruler
-    overviewRulerBorder: false,
-  })
+  window.addEventListener('load', () => {
+    globalThis.editor = globalThis.monaco.editor.create(input, {
+      language: 'markdown',
+      wordWrap: 'on',
+      minimap: { enabled: false },
+      fontSize: 16,
+      // hide gutter aside line number
+      lineNumbers: 'on',
+      lineDecorationsWidth: 6,
+      lineNumbersMinChars: 0,
+      folding: false,
+      // hide vertical line of ruler
+      overviewRulerBorder: false,
+    })
 
-  window.addEventListener('resize', () => {
-    const { width, height } = input.getBoundingClientRect()
-    input.style.setProperty('width', `${width}px`)
-    input.style.setProperty('height', `${height}px`)
-    editor.layout()
+    input.classList.remove('loading')
   })
 }
 
@@ -64,7 +57,7 @@ function initView() {
   input.addEventListener('keydown', (e) => {
     clearTimeout(timeoutToken)
     timeoutToken = setTimeout(() => {
-      const content = editor.getValue()
+      const content = globalThis.editor?.getValue() ?? ''
       if (content.length > 0) {
         renderMapByString(content)
       }
@@ -78,7 +71,7 @@ function initView() {
       input.classList.add('loading')
 
       const result = await loadFileAsText(file)
-      editor.setValue(result)
+      globalThis.editor.setValue(result)
       renderMapByString(result)
       input.classList.remove('loading')
       fileSelect.files = null
@@ -86,7 +79,7 @@ function initView() {
   })
 
   convert.addEventListener('click', async () => {
-    const content = editor.getValue()
+    const content = globalThis.editor?.getValue() ?? ''
     const arrayBuffer = await parseXMindMarkToXMindFile(content)
     const downloadFileName = openedFileName.length > 0 ? openedFileName : content.split('\n').map(str => str.trim()).filter(str => str.length > 0)[0]
     downloadFile(arrayBuffer, `${downloadFileName}.xmind`)
@@ -96,6 +89,7 @@ function initView() {
 function main() {
   initEditor()
   initRenderEngine()
+
   initView()
 }
 

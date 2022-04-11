@@ -1,9 +1,8 @@
-import axios from 'axios'
-
-export async function loadExternalScript(url: string,): Promise<void> {
-  const response = await axios.get(url)
+export async function loadExternalScript(url: string): Promise<void> {
+  const origin = new URL(url).origin
+  const response = await fetch(url, { headers: { 'Access-Control-Allow-Origin': '*' }})
   const script = document.createElement('script')
-  script.innerHTML = response.data
+  script.innerHTML = await response.text()
   document.body.appendChild(script)
 }
 
