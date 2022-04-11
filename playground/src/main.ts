@@ -1,10 +1,8 @@
 import { parseXMindMarkToXMindFile } from '../../src'
-import { downloadFile, loadExternalScript, loadFileAsText } from './loader'
+import { downloadFile, loadFileAsText } from './loader'
 import { renderMapByString } from './map'
 
 let openedFileName: string = ''
-
-const renderEngineDownloadUrl = 'https://assets.xmind.net/snowbrush/snowbrush-2.47.0.js'
 
 function initRenderEngine() {
   const result = document.getElementById('result') as HTMLDivElement
@@ -13,10 +11,10 @@ function initRenderEngine() {
   result.classList.add('loading')
   convert.classList.add('loading')
 
-  loadExternalScript(renderEngineDownloadUrl).then(() => {
+  window.addEventListener('load', () => {
     result.classList.remove('loading')
     convert.classList.remove('loading')
-
+  
     const existContent = globalThis.editor?.getValue() ?? ''
     if (existContent.length > 0) {
       renderMapByString(existContent)

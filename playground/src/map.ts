@@ -23,9 +23,9 @@ export function renderMapByString(content: string): Promise<void> {
   
   return new Promise((resolve, reject) => {
     const model = createMapByXMindMark(content)
-    const sb = new Snowbrush.SheetEditor({
+    const sb = new globalThis.Snowbrush.SheetEditor({
       el: result,
-      model: new Snowbrush.Model.Sheet(model)
+      model: new globalThis.Snowbrush.Model.Sheet(model)
     })
     sb.on('SHEET_CONTENT_LOADED', () => {
       sb.execAction('fitMap')

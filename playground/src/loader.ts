@@ -1,11 +1,3 @@
-export async function loadExternalScript(url: string): Promise<void> {
-  const origin = new URL(url).origin
-  const response = await fetch(url, { headers: { 'Access-Control-Allow-Origin': '*' }})
-  const script = document.createElement('script')
-  script.innerHTML = await response.text()
-  document.body.appendChild(script)
-}
-
 export async function loadFileAsText(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader()
