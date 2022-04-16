@@ -1,16 +1,12 @@
 {
-  "name": "demo",
+  "name": "playground",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "serve": "vite",
     "build": "ts-node ./build.ts",
     "preview": "yarn build && vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/node": "^17.0.23",
     "ts-node": "^10.7.0",
