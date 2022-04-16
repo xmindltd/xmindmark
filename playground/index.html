@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XMindMark Demo</title>
+  <link rel="stylesheet" href="./src/app.css">
+  <!-- Init Monaco editor -->
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/editor/editor.main.min.css" integrity="sha512-633RnebxsjmF57QUx9c85T6XILSAuJFzKnN5dVsUQ3nsc7c0bW649fCj1Z8ZkAbo5vAHnKZIsGqDokJRiABupA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    var require = { paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' } }
+  </script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/loader.min.js" integrity="sha512-O9SYDgWAM3bEzit1z6mkFd+dxKUplO/oB8UwYGAkg2Zy/WzDUQ2mYA/ysk3c0CxiXAN4u8T9JeZ0Ahk2Jj/33Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/editor/editor.main.min.js" integrity="sha512-US5mTyzGXFej0PaY83FOvimxSL/OMJiUdnPL2QLjwQxJCpOh+nSOKll4E1ZwKq+xiwgyNi5rC4XW1FMn+uy/VQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+  <!-- Init render engine -->
+  <script src="https://assets.xmind.net/snowbrush/snowbrush-2.47.0.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <div>XMindMark Playground</div>
+    </header>
+    <div id="body">
+      <div id="content">
+        <input type="file" name="file-select" id="file-select" accept=".xmindmark,.md,.txt" style="display: none;" />
+        <label id="file-select-handler" for="file-select">Choose a <code>.xmindmark</code> / <code>.md</code> / <code>.txt</code> file</label>
+        <div>Or directly edit your minds below:</div>
+        <div id="input"></div>
+      </div>
+      <div id="convert">
+        <div id="cursor">👉</div>
+        <div id="download">Download</div>
+      </div>
+      <div id="result"></div>
+    </div>
+  </div>
+</body>
+<script type="module" src="./src/main.ts"></script>
+</html>
