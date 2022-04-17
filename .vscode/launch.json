@@ -7,7 +7,7 @@
     {
       "type": "pwa-node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Debug CLI program",
       "skipFiles": [
         "<node_internals>/**"
       ],
