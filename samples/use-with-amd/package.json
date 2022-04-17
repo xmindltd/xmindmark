@@ -1,0 +1,14 @@
+{
+  "name": "use-with-amd",
+  "private": true,
+  "scripts": {
+    "start": "npm run build && node ./dist/index.js",
+    "build": "tsc index.ts --outDir dist"
+  },
+  "dependencies": {
+    "xmindmark": "file:../../"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}

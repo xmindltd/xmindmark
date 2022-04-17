@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XMindMark Vanilla JS Sample</title>
+</head>
+<body>
+  <!-- TODO: replace by cdn url -->
+  <script src="../../dist/umd/index.min.js"></script>
+  <script>
+    const content = `Central Topic\n- Main Topic 1\n- Main Topic 2\n`
+
+    xmindmark.parseXMindMarkToXMindFile(content)
+      .then(arrayBuffer => {
+        // Data of generated .xmind file
+        // Save as local file or upload to somewhere.
+      })
+  </script>
+</body>
+</html>
