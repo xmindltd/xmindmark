@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "rootDir": "./src",
     "lib": ["DOM"],
   },
   "include": ["../src", "./src"]

@@ -1,8 +1,2 @@
-import * as monaco from 'monaco-editor'
-
-declare interface globalThis {
-  Snowbrush: any
-  sb: any
-  monaco: monaco
-  editor: monaco.editor.IStandaloneCodeEditor
-}
+declare var Snowbrush: any
+declare var sb: any
