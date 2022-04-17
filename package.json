@@ -13,6 +13,7 @@
   "scripts": {
     "serve": "tsc --watch --sourceMap",
     "build": "tsc",
+    "build:umd": "esbuild ./src/index.umd.ts --bundle --format=iife --outfile=./dist/umd/index.min.js --minify",
     "serve:playground": "cd playground && yarn && yarn serve",
     "build:playground": "cd playground && yarn && yarn build",
     "test": "rimraf ./dist && npm run build && mocha --recursive --color dist/**/*.spec.js",
@@ -64,6 +65,7 @@
     "@types/node": "^16.11.6",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
+    "esbuild": "^0.14.36",
     "joi": "^17.4.2",
     "mocha": "^9.2.2",
     "rimraf": "^3.0.2",
