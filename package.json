@@ -12,8 +12,9 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "serve": "tsc --watch --sourceMap",
-    "build": "tsc",
-    "build:umd": "esbuild ./src/index.umd.ts --bundle --format=iife --outfile=./dist/umd/index.min.js --minify",
+    "build": "yarn build:tsc && yarn build:umd",
+    "build:tsc": "tsc",
+    "build:umd": "esbuild ./src/index.umd.ts --bundle --format=iife --outfile=./dist/umd/xmindmark.min.js --minify",
     "serve:playground": "cd playground && yarn && yarn serve",
     "build:playground": "cd playground && yarn && yarn build",
     "test": "rimraf ./dist && npm run build && mocha --recursive --color dist/**/*.spec.js",
