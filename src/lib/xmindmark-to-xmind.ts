@@ -29,5 +29,5 @@ export async function parseXMindMarkToXMindFile(xmindMarkFileContent: string): P
 
   return await Object.entries(xmindFolder)
     .reduce((zip, [filename, content]) => zip.file(filename, content), new JSZip())
-    .generateAsync({ type: 'arraybuffer', compression: 'STORE' })
+    .generateAsync({ type: 'arraybuffer', compression: 'DEFLATE', compressionOptions: { level: 6 } })
 }
