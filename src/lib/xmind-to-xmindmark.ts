@@ -3,15 +3,6 @@ import { BoundaryModel, SheetModel, SummaryModel, TopicModel } from '../types'
 
 export type XMindMarkContent = string
 
-export async function parseXMindToXMindMarkFile(xmindFile: ArrayBuffer): Promise<XMindMarkContent> {
-
-  const sheets = await tryExtractContentJSON(xmindFile)
-
-  return sheets && sheets.length > 0
-    ? xmindMarkFrom(sheets[0])
-    : ''
-}
-
 async function tryExtractContentJSON(file: ArrayBuffer): Promise<SheetModel[] | null> {
   try {
     const zip = await new JSZip().loadAsync(file)
@@ -19,57 +10,73 @@ async function tryExtractContentJSON(file: ArrayBuffer): Promise<SheetModel[] | 
 
     return JSON.parse(contentJSON ?? '') as SheetModel[]
   } catch (e) {
+    console.error('Not valid .xmind file.')
     return null
   }
 }
 
-type ScopeContext = {
+type LayerScopeContext = {
   readonly layer: number
   readonly boundaries?: BoundaryModel[]
   readonly summaries?: SummaryModel[]
   boundaryIdentifier: number
   summaryIdentifier: number
 }
-type Context = ScopeContext & {
+type TopicScopeContext = LayerScopeContext & {
   readonly labels: string[]
   readonly title: string
 }
-type TraverseCallback = (ctx: Context) => void
+type TopicContextObserver = (ctx: TopicScopeContext) => void
 
-function traverseTopics(topic: TopicModel, callback: TraverseCallback, scopeContext?: ScopeContext) {
-  const defaultScopeContext: ScopeContext = {
+function traverseTopics(topic: TopicModel, topicObserver: TopicContextObserver, scopeContext?: LayerScopeContext) {
+  const defaultScopeContext: LayerScopeContext = {
     layer: 0,
     boundaries: topic.boundaries,
     summaries: topic.summaries,
     boundaryIdentifier: 1,
     summaryIdentifier: 1
   }
-  const context: Context = {
+  const context: TopicScopeContext = {
     labels: topic.labels ?? [],
     title: topic.title,
     ...(scopeContext ?? defaultScopeContext)
   }
-  callback(context)
+  topicObserver(context)
 
-  const currentScopeContext: ScopeContext = {
+  const currentScopeContext: LayerScopeContext = {
     layer: scopeContext?.layer ? scopeContext.layer + 1 : 1,
     boundaries: topic.boundaries,
     summaries: topic.summaries,
     boundaryIdentifier: 1,
     summaryIdentifier: 1
   }
-  topic.children?.attached?.forEach(child => traverseTopics(child, callback, currentScopeContext))
+  topic.children?.attached?.forEach(child => traverseTopics(child, topicObserver, currentScopeContext))
 }
 
 function xmindMarkFrom(sheet: SheetModel): XMindMarkContent {
   const lines: string[] = []
   const root = sheet.rootTopic
-  traverseTopics(root, ({ labels, title, layer }) => {
-    const indent = Array.from({ length: layer }).reduce(ind => ind += '    ', '')
+  const topicObserver: TopicContextObserver = ({ labels, title, layer }) => {
+    const indent = Array.from({ length: layer }).reduce<string>(prevIndent => prevIndent.concat('    '), '')
     const prefix = layer > 0 ? '- ' : ''
     const label = labels.length > 0 ? `[${labels.map(v => v.trim()).join(', ')}] ` : ''
-    const line = `${indent}${prefix}${label}${title}`
+    const line = indent
+      .concat(prefix)
+      .concat(label)
+      .concat(title)
+
     lines.push(line)
-  })
+  }
+  traverseTopics(root, topicObserver)
+  lines.push('') // append last empty line
   return lines.join('\n')
+}
+
+export async function parseXMindToXMindMarkFile(xmindFile: ArrayBuffer, targetSheetOrder: number = 0): Promise<XMindMarkContent> {
+
+  const sheets = await tryExtractContentJSON(xmindFile)
+
+  return sheets && sheets[targetSheetOrder]
+    ? xmindMarkFrom(sheets[targetSheetOrder])
+    : ''
 }

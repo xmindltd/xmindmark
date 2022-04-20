@@ -32,6 +32,15 @@
         "--color",
 				"${workspaceFolder}/dist/${relativeFileDirname}/${fileBasenameNoExtension}.js"
 			],
+      "windows": {
+        "program": "${workspaceFolder}\\node_modules\\mocha\\bin\\mocha",
+        "args": [
+          "--debug-brk",
+          "--inspect",
+          "--color",
+          "${workspaceFolder}\\dist\\${relativeFileDirname}\\${fileBasenameNoExtension}.js"
+        ]
+      },
 			"skipFiles": [
 				"<node_internals>/**"
 			],
