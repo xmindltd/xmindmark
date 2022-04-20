@@ -15,7 +15,7 @@
     /* Emit */
     "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
     "newLine": "lf",                                /* Set the newline character for emitting files. */
-    "outDir": "./dist",
+    "outDir": "./dist/src",
 
     /* Interop Constraints */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */

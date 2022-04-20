@@ -1,12 +1,18 @@
 export type TopicModel = {
   id: string,
-  class: string,
   title: string,
-  structureClass: string,
-  titleUnedited: boolean,
-  boundaries?: Boundary[],
-  summaries?: Summary[]
+  class?: string,
+  structureClass?: string,
+  titleUnedited?: boolean,
+  boundaries?: BoundaryModel[],
+  summaries?: SummaryModel[],
+  labels?: string[],
+  children?: TopicChildren
 }
+
+export type TopicChildren = Partial<Record<TopicType, TopicModel[]>>
+
+export type TopicType = 'attached' | 'detached' | 'summary'
 
 export type SheetModel = {
   id: string,
@@ -15,11 +21,15 @@ export type SheetModel = {
   rootTopic: TopicModel,
   topicPositioning: string,
 }
-
-export type MapElement = {
-  theme: Record<string, any>,
-  rootTopic: any
+type RangeDifinition = `(${number},${number})`
+export type BoundaryModel = {
+  id: string,
+  title: string,
+  range: RangeDifinition,
+  titleUnedited: boolean
 }
-
-export type Boundary = {}
-export type Summary = {}
+export type SummaryModel = {
+  id: string,
+  range: RangeDifinition,
+  topicId: string
+}
