@@ -1,119 +1,222 @@
 export const inputJSON = [
   {
-    "id": "8cdb771ba6ea4d326bea8a49a1",
+    "id": "cfa9830253ba93bf2a7ba99eb5",
     "class": "sheet",
     "title": "Map 1",
     "rootTopic": {
-      "id": "42682319c448604727b7885a60",
+      "id": "9da9d8f03b0934d5b0c9fbfb06",
       "class": "topic",
-      "title": "Seasons",
+      "title": "Central Topic",
       "structureClass": "org.xmind.ui.logic.right",
+      "titleUnedited": true,
       "children": {
         "attached": [
           {
-            "id": "dd996085008bf826d4f1fac8f0",
-            "title": "Spring",
+            "id": "d6a999f494d910ae15ec7847d5",
+            "title": "Main Topic 1",
+            "titleUnedited": true,
             "children": {
               "attached": [
                 {
                   "title": "Subtopic 1",
                   "titleUnedited": true,
-                  "id": "02812b00-7a31-4a01-967b-02718d7c5e4d",
+                  "id": "375b995c-7963-4df6-87fb-fa364f41e251",
+                  "children": {
+                    "attached": [
+                      {
+                        "title": "Subtopic 1",
+                        "titleUnedited": true,
+                        "id": "ce2ccafe-1bc7-432b-9cf4-231d372b6e28"
+                      },
+                      {
+                        "title": "Subtopic 2",
+                        "titleUnedited": true,
+                        "id": "9dc39688-8c52-46d2-8bc7-82e80378d9e0"
+                      },
+                      {
+                        "title": "Subtopic 3",
+                        "titleUnedited": true,
+                        "id": "eb48ded5-2cc5-4a26-a622-e24f4e0afe23"
+                      }
+                    ]
+                  },
+                  "boundaries": [
+                    {
+                      "id": "7bf8ff69-2c49-4747-9a21-c1fcc4c1f388",
+                      "title": "title1",
+                      "range": "(0,1)"
+                    },
+                    {
+                      "id": "d0c73c7d-7c1c-43c7-a895-b752dcf059d6",
+                      "title": "title2",
+                      "range": "(1,2)"
+                    }
+                  ],
                   "labels": [
-                    "Inside label"
+                    "Sub Label",
+                    "1"
                   ]
                 },
                 {
                   "title": "Subtopic 2",
                   "titleUnedited": true,
-                  "id": "61f4d0ff-0b24-4b19-9bd7-fbe6b4068ab3",
+                  "id": "9e9c6267-67af-4e8e-b601-f65b2c8756c8",
                   "labels": [
-                    "Inside label"
+                    "Sub Label",
+                    "2"
                   ]
                 },
                 {
                   "title": "Subtopic 3",
                   "titleUnedited": true,
-                  "id": "f750de89-1a49-4d30-b539-3370a432b801",
+                  "id": "d6491be7-e171-4a08-bd7b-f3c7673d02b3",
+                  "children": {
+                    "attached": [
+                      {
+                        "title": "Subtopic 1",
+                        "titleUnedited": true,
+                        "id": "5218652a-7166-48bc-ada1-b16cb13b7449"
+                      },
+                      {
+                        "title": "Subtopic 2",
+                        "titleUnedited": true,
+                        "id": "dcb93fd8-49e6-4be0-b2a3-160811dee0a1"
+                      },
+                      {
+                        "title": "Subtopic 3",
+                        "titleUnedited": true,
+                        "id": "98bc884f-ff8a-4d08-a080-103e4724ed7f"
+                      }
+                    ]
+                  },
                   "labels": [
-                    "Inside label"
+                    "Sub Label",
+                    " 2"
+                  ],
+                  "boundaries": [
+                    {
+                      "id": "38a2f0b2-abf0-496c-8ee9-f2ae89ba4f95",
+                      "title": "title2",
+                      "range": "(0,2)"
+                    }
                   ]
                 }
               ]
             },
-            "boundaries": [
-              {
-                "id": "6f878425-121c-4b60-a080-df8da9ca3349",
-                "title": "",
-                "range": "(0,2)",
-                "titleUnedited": true
-              }
+            "labels": [
+              "Main Label",
+              " 1"
             ]
           },
           {
-            "id": "1b99df9e8dd8d2398f0c3b7bc3",
-            "title": "Summer"
+            "id": "1acb9f64ec2b580e78d44bd730",
+            "title": "Main Topic 2",
+            "titleUnedited": true,
+            "labels": [
+              "Main Label",
+              " 1"
+            ]
           },
           {
-            "id": "038bf4b01e3b2e63ddb998ad2a",
-            "title": "Autumn"
-          },
-          {
-            "id": "107beb006018b442e9b22bca54",
-            "title": "Winter",
+            "id": "047855c92f382834e03e0b48f0",
+            "title": "Main Topic 3",
+            "titleUnedited": true,
             "children": {
               "attached": [
                 {
                   "title": "Subtopic 1",
                   "titleUnedited": true,
-                  "id": "4a85d851-8b0e-4426-b25c-95635dcf3dad"
+                  "id": "84467ae9-6559-4b30-8301-111824719aef",
+                  "children": {
+                    "attached": [
+                      {
+                        "title": "Subtopic 1",
+                        "titleUnedited": true,
+                        "id": "1046789a-1ed7-4505-9833-8f1d1bf78ac0"
+                      },
+                      {
+                        "title": "Subtopic 2",
+                        "titleUnedited": true,
+                        "id": "fd3c69c7-49ea-46b3-92e8-744fd8f31741"
+                      },
+                      {
+                        "title": "Subtopic 3",
+                        "titleUnedited": true,
+                        "id": "e49342cc-7bcf-4cf0-b448-a5a79017286b"
+                      },
+                      {
+                        "title": "Subtopic 4",
+                        "titleUnedited": true,
+                        "id": "8beeb6cd-8e4d-421c-bf18-2148bd541276"
+                      }
+                    ],
+                    "summary": [
+                      {
+                        "title": "Summary",
+                        "titleUnedited": true,
+                        "id": "bb27855c-6c8a-4064-b508-a241e694fdad"
+                      },
+                      {
+                        "title": "Summary",
+                        "titleUnedited": true,
+                        "id": "b4e29e90-3950-44b5-9a19-77c4408b7f43"
+                      }
+                    ]
+                  },
+                  "summaries": [
+                    {
+                      "id": "d2794f66-ecdf-41fb-b268-752f78d385fa",
+                      "range": "(0,2)",
+                      "topicId": "bb27855c-6c8a-4064-b508-a241e694fdad"
+                    },
+                    {
+                      "id": "0fe7e38b-fef4-4b22-8f46-10b9b9453a44",
+                      "range": "(1,3)",
+                      "topicId": "b4e29e90-3950-44b5-9a19-77c4408b7f43"
+                    }
+                  ],
+                  "labels": [
+                    "Sub label 3"
+                  ]
                 },
                 {
                   "title": "Subtopic 2",
                   "titleUnedited": true,
-                  "id": "6875f054-95ed-44ed-865d-9e71aa2d2264"
+                  "id": "3ee5aa6a-46d0-46d4-97c2-98c22b07dc5f",
+                  "labels": [
+                    "Sub label 3"
+                  ]
                 },
                 {
                   "title": "Subtopic 3",
                   "titleUnedited": true,
-                  "id": "1f478a96-2333-4c56-a546-d641dc91385c"
-                }
-              ],
-              "summary": [
-                {
-                  "title": "Summary",
-                  "titleUnedited": true,
-                  "id": "708f9e75-977c-4ac1-b79f-e06756b16161"
+                  "id": "4d976d4e-b94f-4ef5-a52f-3c08521de673",
+                  "labels": [
+                    "Sub label 3"
+                  ]
                 }
               ]
             },
-            "summaries": [
-              {
-                "id": "b8177bda-7eee-4ee9-954e-1fb57a528fec",
-                "range": "(0,2)",
-                "topicId": "708f9e75-977c-4ac1-b79f-e06756b16161"
-              }
+            "labels": [
+              "Main Label",
+              " 1"
+            ]
+          },
+          {
+            "id": "ddaa1c39d16a3ba27c5e2b1203",
+            "title": "Main Topic 4",
+            "titleUnedited": true,
+            "labels": [
+              "Main Label",
+              " 1"
             ]
           }
         ]
-      },
-      "summaries": [],
-      "boundaries": [
-        {
-          "id": "a1169f77-181f-4577-abad-228bd6941ab5",
-          "title": "Summer and Autumn",
-          "range": "(1,2)"
-        },
-        {
-          "id": "027aa374-97da-4250-bdba-b00717473446",
-          "title": "Spring to Autumn",
-          "range": "(0,2)"
-        }
-      ]
+      }
     },
     "extensions": [],
     "theme": {
-      "id": "8f2d3dd1-2a4b-4871-b802-2503e319dc05",
+      "id": "4ae916e1-2b46-4355-ac32-e6e6bd300614",
       "centralTopic": {
         "id": "c5069014-b642-4cf5-bb50-1d29bd0df2a1",
         "properties": {
@@ -296,57 +399,111 @@ export const inputJSON = [
       },
       "colorThemeId": "Rainbow-#000229-MULTI_LINE_COLORS",
       "expiredTopic": {
-        "id": "2b84f193-503d-47aa-b616-54e3b71f56ea",
+        "id": "850577ef-df99-4f15-803c-e757a6889581",
         "properties": {
           "fo:text-decoration": "line-through",
           "svg:fill": "none"
         }
       },
       "global": {
-        "id": "3ff6c49d-521f-44e2-baf0-91292b61e07f",
+        "id": "acac7ad0-3c76-4ee3-821d-bd7a1c3b7207",
         "properties": {}
       },
       "skeletonThemeId": "db4a5df4db39a8cd1310ea55ea"
     },
     "topicPositioning": "fixed",
+    "coreVersion": "2.45.0",
     "relationships": [
       {
-        "id": "1485bd76-1468-4621-b2e1-1c934dddc829",
-        "end1Id": "dd996085008bf826d4f1fac8f0",
-        "end2Id": "42682319c448604727b7885a60",
+        "id": "a3377dde-08d8-467e-990f-1e203d682079",
+        "end1Id": "d6a999f494d910ae15ec7847d5",
+        "end2Id": "1acb9f64ec2b580e78d44bd730",
         "controlPoints": {
           "0": {
-            "x": 0,
-            "y": -156.972
+            "angle": 0.5235987755982988,
+            "amount": 0.33
           },
           "1": {
-            "x": 0,
-            "y": -156.972
+            "angle": 0.5235987755982988,
+            "amount": 0.33
           }
         },
-        "titleUnedited": true,
         "style": {
-          "id": "397fcadd-b8b3-45d8-9d32-2caa7e1c90ff",
+          "id": "2de0ef3a-4ec0-4c0e-92ce-9b0023b010eb",
           "properties": {
             "shape-class": "org.xmind.relationshipShape.curved"
           }
-        }
+        },
+        "title": "relationship title 1"
+      },
+      {
+        "id": "54319cfe-6084-443f-88fb-4c26c8b13c1b",
+        "end1Id": "d6491be7-e171-4a08-bd7b-f3c7673d02b3",
+        "end2Id": "375b995c-7963-4df6-87fb-fa364f41e251",
+        "controlPoints": {
+          "0": {
+            "angle": 0.5235987755982988,
+            "amount": 0.33
+          },
+          "1": {
+            "angle": 0.5235987755982988,
+            "amount": 0.33
+          }
+        },
+        "style": {
+          "id": "90cdf34f-95b9-4408-a009-5d396e35156a",
+          "properties": {
+            "shape-class": "org.xmind.relationshipShape.curved"
+          }
+        },
+        "title": "relationship title 2"
+      },
+      {
+        "id": "e071f5ea-c8e4-48da-ba36-1ed13a924f4b",
+        "end1Id": "1046789a-1ed7-4505-9833-8f1d1bf78ac0",
+        "end2Id": "ddaa1c39d16a3ba27c5e2b1203",
+        "controlPoints": {
+          "0": {
+            "angle": 0.5235987755982988,
+            "amount": 0.33
+          },
+          "1": {
+            "angle": 0.5235987755982988,
+            "amount": 0.33
+          }
+        },
+        "style": {
+          "id": "f8302308-6523-44aa-868d-62aed086393e",
+          "properties": {
+            "shape-class": "org.xmind.relationshipShape.curved"
+          }
+        },
+        "title": "relationship title 3"
       }
-    ],
-    "coreVersion": "2.45.0"
+    ]
   }
 ]
 
 export const expectedOutputXMindMark = 
-`Seasons
-    - Spring
-        - [Inside label] Subtopic 1
-        - [Inside label] Subtopic 2
-        - [Inside label] Subtopic 3
-    - Summer
-    - Autumn
-    - Winter
-        - Subtopic 1
-        - Subtopic 2
-        - Subtopic 3
+`Central Topic
+    - [Main Label, 1] Main Topic 1
+        - [Sub Label, 1] Subtopic 1
+            - Subtopic 1 [B1]
+            - Subtopic 2 [B1][B2]
+            - Subtopic 3 [B2]
+        - [Sub Label, 2] Subtopic 2
+        - [Sub Label, 2] Subtopic 3
+            - Subtopic 1 [B]
+            - Subtopic 2 [B]
+            - Subtopic 3 [B]
+    - [Main Label, 1] Main Topic 2
+    - [Main Label, 1] Main Topic 3
+        - [Sub label 3] Subtopic 1
+            - Subtopic 1 [S1]
+            - Subtopic 2 [S1][S2]
+            - Subtopic 3 [S1][S2]
+            - Subtopic 4 [S2]
+        - [Sub label 3] Subtopic 2
+        - [Sub label 3] Subtopic 3
+    - [Main Label, 1] Main Topic 4
 `
