@@ -491,11 +491,14 @@ export const expectedOutputXMindMark =
             - Subtopic 1 [B1]
             - Subtopic 2 [B1][B2]
             - Subtopic 3 [B2]
+            [B1]: title1
+            [B2]: title2
         - [Sub Label, 2] Subtopic 2
         - [Sub Label, 2] Subtopic 3
             - Subtopic 1 [B]
             - Subtopic 2 [B]
             - Subtopic 3 [B]
+            [B]: title2
     - [Main Label, 1] Main Topic 2
     - [Main Label, 1] Main Topic 3
         - [Sub label 3] Subtopic 1
@@ -503,6 +506,8 @@ export const expectedOutputXMindMark =
             - Subtopic 2 [S1][S2]
             - Subtopic 3 [S1][S2]
             - Subtopic 4 [S2]
+            [S1]: Summary
+            [S2]: Summary
         - [Sub label 3] Subtopic 2
         - [Sub label 3] Subtopic 3
     - [Main Label, 1] Main Topic 4
