@@ -45,12 +45,12 @@ function traverseBranch(
   onTopicScope: TopicScopeObserver,
   onBranchScope: BranchScopeObserver,
   index?: number,
-  currentBranchScope?: BranchScope
+  prevBranchScope?: BranchScope
 ) {
   const branchScope: BranchScope = {
-    depth: currentBranchScope?.depth ?? 0,
-    boundaries: currentBranchScope?.boundaries ?? identifiedArray(rootTopic.boundaries ?? [], 'B'),
-    summaries: currentBranchScope?.summaries ?? identifiedArray(rootTopic.summaries ?? [], 'S')
+    depth: prevBranchScope?.depth ?? 0,
+    boundaries: prevBranchScope?.boundaries ?? identifiedArray(rootTopic.boundaries ?? [], 'B'),
+    summaries: prevBranchScope?.summaries ?? identifiedArray(rootTopic.summaries ?? [], 'S')
   }
 
   const topicScope: TopicScope = {
@@ -63,15 +63,15 @@ function traverseBranch(
 
   onTopicScope(topicScope)
 
-  const nextBranchScope: BranchScope = {
+  const currentBranchScope: BranchScope = {
     depth: branchScope.depth + 1,
     boundaries: identifiedArray(rootTopic.boundaries ?? [], 'B'),
     summaries: identifiedArray(rootTopic.summaries ?? [], 'S')
   }
 
-  rootTopic.children?.attached?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, nextBranchScope))
+  rootTopic.children?.attached?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, currentBranchScope))
 
-  onBranchScope(branchScope)
+  onBranchScope(currentBranchScope)
 }
 
 function orderInsideRange(range: ClosedRange, order: number): boolean {
@@ -82,7 +82,7 @@ function orderInsideRange(range: ClosedRange, order: number): boolean {
   return start <= end && start <= order && order <= end
 }
 
-function makeIndentOfLine({ depth }: TopicScope): string {
+function makeIndentOfLine({ depth }: Pick<TopicScope, 'depth'>): string {
   return Array.from({ length: depth }).reduce<string>(prevIndent => prevIndent.concat('    '), '')
 }
 
@@ -107,7 +107,7 @@ function makeBoundaryOfLine(scope: TopicScope): string {
     ''
   )
 }
-const makeSummaryOfLine: TokenBuilder = (scope) => {
+function makeSummaryOfLine(scope): string {
   const { summaries, isRoot } = scope
   if (isRoot || !summaries || summaries.length === 0) return ''
 
@@ -118,6 +118,9 @@ const makeSummaryOfLine: TokenBuilder = (scope) => {
       : str,
     ''
   )
+}
+function makeBoundaryTitleLine(scope: BranchScope, { identifier, title }: BoundaryModelWithIdentifier): string {
+  return `${makeIndentOfLine(scope)}[${identifier}]: ${title}`
 }
 
 function xmindMarkFrom({ rootTopic }: SheetModel): XMindMarkContent {
@@ -142,8 +145,9 @@ function xmindMarkFrom({ rootTopic }: SheetModel): XMindMarkContent {
   }
 
   const branchScopeObserver: BranchScopeObserver = (scope) => {
-    return
+    scope.boundaries?.forEach(boundary => lines.push(makeBoundaryTitleLine(scope, boundary)))
   }
+
   traverseBranch(rootTopic, topicScopeObserver, branchScopeObserver)
   lines.push('') // append last empty line
   return lines.join('\n')
