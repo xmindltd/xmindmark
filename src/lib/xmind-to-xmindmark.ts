@@ -4,21 +4,22 @@ import { BoundaryModel, SheetModel, SummaryModel, TopicModel } from '../types'
 export type XMindMarkContent = string
 
 type Identifier = { identifier: string }
-type TokenBuilder = (context: TopicContext) => string
+type TokenBuilder = (scope: TopicScope) => string
 type BoundaryModelWithIdentifier = BoundaryModel & Identifier
 type SummaryModelWithIdentifier = SummaryModel & Identifier
-type LayerContext = {
+type BranchScope = {
   readonly depth: number
   readonly boundaries?: BoundaryModelWithIdentifier[]
   readonly summaries?: SummaryModelWithIdentifier[]
 }
-type TopicContext = LayerContext & {
+type TopicScope = BranchScope & {
   readonly labels: string[]
   readonly title: string
-  readonly index: number
+  readonly order: number // starts from 0, like index
   readonly isRoot: boolean
 }
-type TopicContextObserver = (ctx: TopicContext) => void
+type TopicScopeObserver = (scope: TopicScope) => void
+type BranchScopeObserver = (scope: BranchScope) => void
 type ClosedRange = `(${number},${number})`
 
 async function tryExtractContentJSON(file: ArrayBuffer): Promise<SheetModel[] | null> {
@@ -33,81 +34,102 @@ async function tryExtractContentJSON(file: ArrayBuffer): Promise<SheetModel[] | 
   }
 }
 
+function identifiedArray<T>(arr: T[], prefix: string): (T & { identifier: string })[] {
+  if (arr.length === 0) return []
+  else if (arr.length === 1) return [{ ...arr[0], identifier: prefix }]
+  else return arr.map((v, i) => ({ ...v, identifier: `${prefix}${i + 1}` }))
+}
 
-function traverseTopics(
-  topic: TopicModel,
-  index: number,
-  topicObserver: TopicContextObserver,
-  scopeContext?: LayerContext
+function traverseBranch(
+  rootTopic: TopicModel,
+  onTopicScope: TopicScopeObserver,
+  onBranchScope: BranchScopeObserver,
+  index?: number,
+  currentBranchScope?: BranchScope
 ) {
-  const identifiyArray = <T>(arr: T[], prefix: string): (T & { identifier: string })[] => {
-    if (arr.length === 0) return []
-    else if (arr.length === 1) return [{ ...arr[0], identifier: prefix }]
-    else return arr.map((v, i) => ({ ...v, identifier: `${prefix}${i + 1}` }))
+  const branchScope: BranchScope = {
+    depth: currentBranchScope?.depth ?? 0,
+    boundaries: currentBranchScope?.boundaries ?? identifiedArray(rootTopic.boundaries ?? [], 'B'),
+    summaries: currentBranchScope?.summaries ?? identifiedArray(rootTopic.summaries ?? [], 'S')
   }
 
-  const labels = topic.labels ?? []
-  const title = topic.title ?? ''
-  const depth = scopeContext?.depth ?? 0
-  const isRoot = depth === 0
-  const boundaries = scopeContext?.boundaries ?? identifiyArray(topic.boundaries ?? [], 'B')
-  const summaries = scopeContext?.summaries ?? identifiyArray(topic.summaries ?? [], 'S')
-
-  const context: TopicContext = { labels, title, index, depth, isRoot, boundaries, summaries }
-  topicObserver(context)
-
-  const nextScopeContext: LayerContext = {
-    depth: depth + 1,
-    boundaries: identifiyArray(topic.boundaries ?? [], 'B'),
-    summaries: identifiyArray(topic.summaries ?? [], 'S')
+  const topicScope: TopicScope = {
+    labels: rootTopic.labels ?? [],
+    title: rootTopic.title ?? '',
+    order: index ?? 0,
+    isRoot: branchScope.depth === 0,
+    ...branchScope
   }
-  topic.children?.attached?.forEach((child, i) => traverseTopics(child, i, topicObserver, nextScopeContext))
+
+  onTopicScope(topicScope)
+
+  const nextBranchScope: BranchScope = {
+    depth: branchScope.depth + 1,
+    boundaries: identifiedArray(rootTopic.boundaries ?? [], 'B'),
+    summaries: identifiedArray(rootTopic.summaries ?? [], 'S')
+  }
+
+  rootTopic.children?.attached?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, nextBranchScope))
+
+  onBranchScope(branchScope)
 }
 
-const indexInsideRange = (range: ClosedRange, index: number): boolean => {
-  const [start, end] = range.replace(/[\(|\)]/g, '').split(',').map(s => parseInt(s.trim()))
-  return start <= end && start <= index && index <= end
+function orderInsideRange(range: ClosedRange, order: number): boolean {
+  const [start, end] = range.replace(/[\(|\)]/g, '')
+    .split(',')
+    .map(s => parseInt(s.trim()))
+
+  return start <= end && start <= order && order <= end
 }
 
-const makeIndentOfLine: TokenBuilder = ({ depth }) => Array.from({ length: depth }).reduce<string>(prevIndent => prevIndent.concat('    '), '')
-const makePrefixOfLine: TokenBuilder = ({ depth }) => depth > 0 ? '- ' : ''
-const makeLabelOfLine: TokenBuilder = ({ labels }) => labels.length > 0 ? `[${labels.map(v => v.trim()).join(', ')}]` : ''
-const makeTitleOfLine: TokenBuilder = ({ title }) => title
-const makeBoundaryOfLine: TokenBuilder = (context) => {
-  const { boundaries, isRoot } = context
+function makeIndentOfLine({ depth }: TopicScope): string {
+  return Array.from({ length: depth }).reduce<string>(prevIndent => prevIndent.concat('    '), '')
+}
+
+function makePrefixOfLine({ depth }: TopicScope): string {
+  return depth > 0 ? '- ' : ''
+}
+function makeLabelOfLine({ labels }: TopicScope): string {
+  return labels.length > 0 ? `[${labels.map(v => v.trim()).join(', ')}]` : ''
+}
+function makeTitleOfLine({ title }: TopicScope): string {
+  return title
+}
+function makeBoundaryOfLine(scope: TopicScope): string {
+  const { boundaries, isRoot } = scope
   if (isRoot || !boundaries || boundaries.length === 0) return ''
 
-  if (boundaries.length === 1) return indexInsideRange(boundaries[0].range, context.index) ? `[${boundaries[0].identifier}]` : ''
+  if (boundaries.length === 1) return orderInsideRange(boundaries[0].range, scope.order) ? `[${boundaries[0].identifier}]` : ''
   else return boundaries.reduce(
-    (str, { range, identifier }) => indexInsideRange(range, context.index)
+    (str, { range, identifier }) => orderInsideRange(range, scope.order)
       ? `${str}[${identifier}]`
       : str,
     ''
   )
 }
-const makeSummaryOfLine: TokenBuilder = (context) => {
-  const { summaries, isRoot } = context
+const makeSummaryOfLine: TokenBuilder = (scope) => {
+  const { summaries, isRoot } = scope
   if (isRoot || !summaries || summaries.length === 0) return ''
 
-  if (summaries.length === 1) return indexInsideRange(summaries[0].range, context.index) ? `[${summaries[0].identifier}]` : ''
+  if (summaries.length === 1) return orderInsideRange(summaries[0].range, scope.order) ? `[${summaries[0].identifier}]` : ''
   else return summaries.reduce(
-    (str, { range, identifier }) => indexInsideRange(range, context.index)
+    (str, { range, identifier }) => orderInsideRange(range, scope.order)
       ? `${str}[${identifier}]`
       : str,
     ''
   )
 }
 
-function xmindMarkFrom(sheet: SheetModel): XMindMarkContent {
+function xmindMarkFrom({ rootTopic }: SheetModel): XMindMarkContent {
   const lines: string[] = []
-  const root = sheet.rootTopic
-  const topicObserver: TopicContextObserver = (context) => {
-    const indent = makeIndentOfLine(context)
-    const prefix = makePrefixOfLine(context)
-    const label = makeLabelOfLine(context)
-    const title = makeTitleOfLine(context)
-    const boundary = makeBoundaryOfLine(context)
-    const summary = makeSummaryOfLine(context)
+
+  const topicScopeObserver: TopicScopeObserver = (scope) => {
+    const indent = makeIndentOfLine(scope)
+    const prefix = makePrefixOfLine(scope)
+    const label = makeLabelOfLine(scope)
+    const title = makeTitleOfLine(scope)
+    const boundary = makeBoundaryOfLine(scope)
+    const summary = makeSummaryOfLine(scope)
     
     const line = indent
       .concat(prefix)
@@ -118,7 +140,11 @@ function xmindMarkFrom(sheet: SheetModel): XMindMarkContent {
 
     lines.push(line)
   }
-  traverseTopics(root, 0, topicObserver)
+
+  const branchScopeObserver: BranchScopeObserver = (scope) => {
+    return
+  }
+  traverseBranch(rootTopic, topicScopeObserver, branchScopeObserver)
   lines.push('') // append last empty line
   return lines.join('\n')
 }
