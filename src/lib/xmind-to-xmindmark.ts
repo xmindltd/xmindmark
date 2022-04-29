@@ -1,5 +1,5 @@
 import JSZip from 'jszip'
-import { BoundaryModel, SheetModel, SummaryModel, TopicModel, TopicType } from '../types'
+import { BoundaryModel, RelationshipModel, SheetModel, SummaryModel, TopicModel, TopicType } from '../types'
 
 export type XMindMarkContent = string
 
@@ -8,7 +8,11 @@ type Boundary = BoundaryModel & Identifier
 type Summary = SummaryModel & Identifier & {
   title: string
 }
-type BranchScope = {
+type Relationship = RelationshipModel & Identifier
+type SheetScope = {
+  readonly relationships: Relationship[]
+}
+type BranchScope = SheetScope & {
   readonly depth: number
   readonly boundaries: Boundary[]
   readonly summaries: Summary[]
@@ -33,7 +37,7 @@ export async function parseXMindToXMindMarkFile(xmindFile: ArrayBuffer, targetSh
     : ''
 }
 
-function xmindMarkFrom({ rootTopic }: SheetModel): XMindMarkContent {
+function xmindMarkFrom({ rootTopic, relationships }: SheetModel): XMindMarkContent {
   const lines: string[] = []
 
   const topicScopeObserver: TopicScopeObserver = (scope) => {
@@ -63,7 +67,7 @@ function xmindMarkFrom({ rootTopic }: SheetModel): XMindMarkContent {
     })
   }
 
-  traverseBranch(rootTopic, topicScopeObserver, branchScopeObserver)
+  traverseBranch(rootTopic, topicScopeObserver, branchScopeObserver, relationships)
   lines.push('') // append last empty line
   return lines.join('\n')
 }
@@ -72,6 +76,7 @@ function traverseBranch(
   rootTopic: TopicModel,
   onTopicScope: TopicScopeObserver,
   onBranchScope: BranchScopeObserver,
+  relationships: RelationshipModel[],
   index?: number,
   prevBranchScope?: BranchScope,
   type?: TopicType
@@ -79,7 +84,8 @@ function traverseBranch(
   const branchScope: BranchScope = {
     depth: prevBranchScope?.depth ?? 0,
     boundaries: prevBranchScope?.boundaries ?? makeIdentifyBoundaries(rootTopic),
-    summaries: prevBranchScope?.summaries ?? makeIdentifySummaries(rootTopic)
+    summaries: prevBranchScope?.summaries ?? makeIdentifySummaries(rootTopic),
+    relationships: prevBranchScope?.relationships ?? makeIdentifyRelationships(relationships)
   }
 
   const topicScope: TopicScope = {
@@ -96,11 +102,12 @@ function traverseBranch(
   const currentBranchScope: BranchScope = {
     depth: branchScope.depth + 1,
     boundaries: makeIdentifyBoundaries(rootTopic),
-    summaries: makeIdentifySummaries(rootTopic)
+    summaries: makeIdentifySummaries(rootTopic),
+    relationships: branchScope.relationships
   }
 
-  rootTopic.children?.attached?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, currentBranchScope, 'attached'))
-  rootTopic.children?.summary?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, currentBranchScope, 'summary'))
+  rootTopic.children?.attached?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, relationships, i, currentBranchScope, 'attached'))
+  rootTopic.children?.summary?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, relationships, i, currentBranchScope, 'summary'))
 
   onBranchScope(currentBranchScope)
 }
@@ -164,6 +171,15 @@ function makeTitleOfLine({ title }: TopicScope): string {
   return title
 }
 
+function makeRelationshipIdentifierOfLine({ relationships, id }: TopicScope): string {
+  const relationshipBegin = relationships.find(({ end1Id }) => end1Id === id)
+  const relationshipEnd = relationships.find(({ end2Id }) => end2Id === id)
+
+  if (relationshipBegin) return `[^${relationshipBegin.identifier}]`
+  if (relationshipEnd) return `[${relationshipEnd.identifier}]`
+  return ''
+}
+
 function makeBoundaryIdenfitierOfLine(scope: TopicScope): string {
   const { boundaries, type } = scope
   if (type !== 'attached' || !boundaries || boundaries.length === 0) return ''
@@ -191,11 +207,12 @@ function makeSummaryIdentifierOfLine(scope: TopicScope): string {
 }
 
 function makeExtensionIdentifierOfLine(scope: TopicScope): string {
+  const relationshipIdentifier = makeRelationshipIdentifierOfLine(scope)
   const boundaryIdentifier = makeBoundaryIdenfitierOfLine(scope)
   const summaryIdentifier = makeSummaryIdentifierOfLine(scope)
 
-  return boundaryIdentifier || summaryIdentifier
-    ? ` ${boundaryIdentifier}${summaryIdentifier}`
+  return relationshipIdentifier || boundaryIdentifier || summaryIdentifier
+    ? ` ${relationshipIdentifier}${boundaryIdentifier}${summaryIdentifier}`
     : ''
 }
 
@@ -233,4 +250,8 @@ function makeIdentifySummaries(topic: TopicModel): Summary[] {
   }
 
   return []
+}
+
+function makeIdentifyRelationships(relationships: RelationshipModel[]): Relationship[] {
+  return relationships.map((relationship, i) => ({ ...relationship, identifier: `${i + 1}` }))
 }

@@ -20,6 +20,7 @@ export type SheetModel = {
   title: string,
   rootTopic: TopicModel,
   topicPositioning: string,
+  relationships: RelationshipModel[]
 }
 type RangeDifinition = `(${number},${number})`
 export type BoundaryModel = {
@@ -32,4 +33,10 @@ export type SummaryModel = {
   id: string,
   range: RangeDifinition,
   topicId: string
+}
+export type RelationshipModel = {
+  id: string,
+  end1Id: string,
+  end2Id: string,
+  title: string
 }
