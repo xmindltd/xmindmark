@@ -3,7 +3,7 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Language and Environment */
-    "rootDir": "./src",
+    "rootDir": ".",
     "target": "ES6",                                     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
 
@@ -15,7 +15,7 @@
     /* Emit */
     "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
     "newLine": "lf",                                /* Set the newline character for emitting files. */
-    "outDir": "./dist/src",
+    "outDir": "./dist",
 
     /* Interop Constraints */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
@@ -28,7 +28,12 @@
     "skipDefaultLibCheck": true,                         /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
+  "include": [
+    "./package.json",
+    "./src"
+  ],
   "exclude": [
+    "./node_modules",
     "./playground/*",
     "./samples/*",
     "./dist",

@@ -11,7 +11,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/dist/cli/index.js",
+      "program": "${workspaceFolder}/dist/src/cli/index.js",
+      "console": "integratedTerminal",
       "sourceMaps": true,
       "cwd": "${workspaceFolder}",
       "args": [
