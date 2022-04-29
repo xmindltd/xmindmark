@@ -227,6 +227,7 @@ export const createMap = (centralTopic = 'Central Topic', options = {}): SheetMo
     titleUnedited: true,
   },
   topicPositioning: "fixed",
+  relationships: [],
   ...options
 })
 

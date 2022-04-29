@@ -76,7 +76,7 @@ function traverseBranch(
   rootTopic: TopicModel,
   onTopicScope: TopicScopeObserver,
   onBranchScope: BranchScopeObserver,
-  relationships: RelationshipModel[],
+  relationships: RelationshipModel[] = [],
   index?: number,
   prevBranchScope?: BranchScope,
   type?: TopicType
