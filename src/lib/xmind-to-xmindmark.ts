@@ -1,5 +1,5 @@
 import JSZip from 'jszip'
-import { BoundaryModel, SheetModel, SummaryModel, TopicModel } from '../types'
+import { BoundaryModel, SheetModel, SummaryModel, TopicModel, TopicType } from '../types'
 
 export type XMindMarkContent = string
 
@@ -14,10 +14,11 @@ type BranchScope = {
   readonly summaries: Summary[]
 }
 type TopicScope = BranchScope & {
+  readonly id: string
   readonly labels: string[]
   readonly title: string
   readonly order: number // starts from 0, like index
-  readonly isRoot: boolean
+  readonly type: TopicType | 'root'
 }
 type TopicScopeObserver = (scope: TopicScope) => void
 type BranchScopeObserver = (scope: BranchScope) => void
@@ -38,24 +39,28 @@ function xmindMarkFrom({ rootTopic }: SheetModel): XMindMarkContent {
   const topicScopeObserver: TopicScopeObserver = (scope) => {
     const indent = makeIndentOfLine(scope)
     const prefix = makePrefixOfLine(scope)
+    const typeIdentifier = makeTypeIdentifierOfLine(scope)
     const label = makeLabelOfLine(scope)
     const title = makeTitleOfLine(scope)
-    const boundary = makeBoundaryOfLine(scope)
-    const summary = makeSummaryOfLine(scope)
+    const extensionIdentifier = makeExtensionIdentifierOfLine(scope)
 
-    const line = indent
-      .concat(prefix)
-      .concat(label.length > 0 ? `${label} ` : '')
-      .concat(title)
-      .concat(boundary.length > 0 ? ` ${boundary}` : '')
-      .concat(summary.length > 0 ? ` ${summary}` : '')
+    const line = indent.concat(...[
+      prefix,
+      typeIdentifier.length > 0 ? `${typeIdentifier}: ` : '',
+      label.length > 0 ? `${label} ` : '',
+      title,
+      extensionIdentifier,
+    ])
 
     lines.push(line)
   }
 
   const branchScopeObserver: BranchScopeObserver = (scope) => {
-    scope.boundaries.forEach(boundary => lines.push(makeBoundaryTitleLine(scope, boundary)))
-    scope.summaries.forEach(summary => lines.push(makeSummaryTitleLine(scope, summary)))
+    scope.boundaries.forEach(boundary => {
+      if (boundary.title) {
+        lines.push(makeBoundaryTitleLine(scope, boundary))
+      }
+    })
   }
 
   traverseBranch(rootTopic, topicScopeObserver, branchScopeObserver)
@@ -68,7 +73,8 @@ function traverseBranch(
   onTopicScope: TopicScopeObserver,
   onBranchScope: BranchScopeObserver,
   index?: number,
-  prevBranchScope?: BranchScope
+  prevBranchScope?: BranchScope,
+  type?: TopicType
 ) {
   const branchScope: BranchScope = {
     depth: prevBranchScope?.depth ?? 0,
@@ -77,10 +83,11 @@ function traverseBranch(
   }
 
   const topicScope: TopicScope = {
+    id: rootTopic.id,
     labels: rootTopic.labels ?? [],
     title: rootTopic.title ?? '',
     order: index ?? 0,
-    isRoot: branchScope.depth === 0,
+    type: type ?? 'root',
     ...branchScope
   }
 
@@ -92,7 +99,8 @@ function traverseBranch(
     summaries: makeIdentifySummaries(rootTopic)
   }
 
-  rootTopic.children?.attached?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, currentBranchScope))
+  rootTopic.children?.attached?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, currentBranchScope, 'attached'))
+  rootTopic.children?.summary?.forEach((child, i) => traverseBranch(child, onTopicScope, onBranchScope, i, currentBranchScope, 'summary'))
 
   onBranchScope(currentBranchScope)
 }
@@ -131,8 +139,21 @@ function makeIndentOfLine({ depth }: Pick<TopicScope, 'depth'>): string {
   return Array.from({ length: depth }).reduce<string>(prevIndent => prevIndent.concat('    '), '')
 }
 
-function makePrefixOfLine({ depth }: TopicScope): string {
-  return depth > 0 ? '- ' : ''
+function makePrefixOfLine({ depth, type }: TopicScope): string {
+  if (type === 'attached') return depth > 0 ? '- ' : ''
+
+  return ''
+}
+
+function makeTypeIdentifierOfLine({ type, id, summaries }: TopicScope): string {
+  if (type === 'summary') {
+    const summary = summaries.find(summary => summary.topicId === id)
+    return summary
+      ? `[${summary.identifier}]`
+      : ''
+  }
+
+  return ''
 }
 
 function makeLabelOfLine({ labels }: TopicScope): string {
@@ -143,9 +164,9 @@ function makeTitleOfLine({ title }: TopicScope): string {
   return title
 }
 
-function makeBoundaryOfLine(scope: TopicScope): string {
-  const { boundaries, isRoot } = scope
-  if (isRoot || !boundaries || boundaries.length === 0) return ''
+function makeBoundaryIdenfitierOfLine(scope: TopicScope): string {
+  const { boundaries, type } = scope
+  if (type !== 'attached' || !boundaries || boundaries.length === 0) return ''
 
   if (boundaries.length === 1) return isOrderInsideRange(boundaries[0].range, scope.order) ? `[${boundaries[0].identifier}]` : ''
   else return boundaries.reduce(
@@ -156,9 +177,9 @@ function makeBoundaryOfLine(scope: TopicScope): string {
   )
 }
 
-function makeSummaryOfLine(scope: TopicScope): string {
-  const { summaries, isRoot } = scope
-  if (isRoot || !summaries || summaries.length === 0) return ''
+function makeSummaryIdentifierOfLine(scope: TopicScope): string {
+  const { summaries, type } = scope
+  if (type === 'root' || type === 'summary' || !summaries || summaries.length === 0) return ''
 
   if (summaries.length === 1) return isOrderInsideRange(summaries[0].range, scope.order) ? `[${summaries[0].identifier}]` : ''
   else return summaries.reduce(
@@ -169,11 +190,16 @@ function makeSummaryOfLine(scope: TopicScope): string {
   )
 }
 
-function makeBoundaryTitleLine(scope: BranchScope, { identifier, title }: Boundary): string {
-  return `${makeIndentOfLine(scope)}[${identifier}]: ${title}`
+function makeExtensionIdentifierOfLine(scope: TopicScope): string {
+  const boundaryIdentifier = makeBoundaryIdenfitierOfLine(scope)
+  const summaryIdentifier = makeSummaryIdentifierOfLine(scope)
+
+  return boundaryIdentifier || summaryIdentifier
+    ? ` ${boundaryIdentifier}${summaryIdentifier}`
+    : ''
 }
 
-function makeSummaryTitleLine(scope: BranchScope, { identifier, title }: Summary): string {
+function makeBoundaryTitleLine(scope: BranchScope, { identifier, title }: Boundary): string {
   return `${makeIndentOfLine(scope)}[${identifier}]: ${title}`
 }
 

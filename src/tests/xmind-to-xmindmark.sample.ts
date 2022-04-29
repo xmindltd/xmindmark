@@ -152,13 +152,30 @@ export const inputJSON = [
                     ],
                     "summary": [
                       {
-                        "title": "Summary",
-                        "titleUnedited": true,
-                        "id": "bb27855c-6c8a-4064-b508-a241e694fdad"
+                        "title": "Summary 1",
+                        "id": "bb27855c-6c8a-4064-b508-a241e694fdad",
+                        "children": {
+                          "attached": [
+                            {
+                              "title": "Subtopic 1",
+                              "titleUnedited": true,
+                              "id": "000b5a54-dee2-43e6-8c8f-2b7ce560ef0c"
+                            },
+                            {
+                              "title": "Subtopic 2",
+                              "titleUnedited": true,
+                              "id": "f27997fe-0539-41ef-bf5d-a0f1331fbbe5"
+                            },
+                            {
+                              "title": "Subtopic 3",
+                              "titleUnedited": true,
+                              "id": "9f46a5f2-92e2-42a8-837a-a55a26e85f17"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "title": "Summary",
-                        "titleUnedited": true,
+                        "title": "Summary 2",
                         "id": "b4e29e90-3950-44b5-9a19-77c4408b7f43"
                       }
                     ]
@@ -177,6 +194,14 @@ export const inputJSON = [
                   ],
                   "labels": [
                     "Sub label 3"
+                  ],
+                  "boundaries": [
+                    {
+                      "id": "18659aad-ea87-4f35-9e71-06ec3720a798",
+                      "title": "",
+                      "range": "(1,2)",
+                      "titleUnedited": true
+                    }
                   ]
                 },
                 {
@@ -503,11 +528,14 @@ export const expectedOutputXMindMark =
     - [Main Label, 1] Main Topic 3
         - [Sub label 3] Subtopic 1
             - Subtopic 1 [S1]
-            - Subtopic 2 [S1][S2]
-            - Subtopic 3 [S1][S2]
+            - Subtopic 2 [B][S1][S2]
+            - Subtopic 3 [B][S1][S2]
             - Subtopic 4 [S2]
-            [S1]: Summary
-            [S2]: Summary
+            [S1]: Summary 1
+                - Subtopic 1
+                - Subtopic 2
+                - Subtopic 3
+            [S2]: Summary 2
         - [Sub label 3] Subtopic 2
         - [Sub label 3] Subtopic 3
     - [Main Label, 1] Main Topic 4
