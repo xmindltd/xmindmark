@@ -1,6 +1,6 @@
 {
   "name": "xmindmark",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "A mind mapping markup language, compatible with markdown, convertable to/from xmind.",
   "bin": {
     "xmindmark": "./dist/src/cli/index.js"
