@@ -51,7 +51,7 @@ function xmindMarkFrom({ rootTopic, relationships }: SheetModel): XMindMarkConte
     const line = indent.concat(...[
       prefix,
       typeIdentifier.length > 0 ? `${typeIdentifier}: ` : '',
-      label.length > 0 ? `${label} ` : '',
+      // label.length > 0 ? `${label} ` : '',
       title,
       extensionIdentifier,
     ])

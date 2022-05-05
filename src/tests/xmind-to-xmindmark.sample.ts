@@ -511,22 +511,22 @@ export const inputJSON = [
 
 export const expectedOutputXMindMark = 
 `Central Topic
-    - [Main Label, 1] Main Topic 1 [^1]
-        - [Sub Label, 1] Subtopic 1 [2]
+    - Main Topic 1 [^1]
+        - Subtopic 1 [2]
             - Subtopic 1 [B1]
             - Subtopic 2 [B1][B2]
             - Subtopic 3 [B2]
             [B1]: title1
             [B2]: title2
-        - [Sub Label, 2] Subtopic 2
-        - [Sub Label, 2] Subtopic 3 [^2]
+        - Subtopic 2
+        - Subtopic 3 [^2]
             - Subtopic 1 [B]
             - Subtopic 2 [B]
             - Subtopic 3 [B]
             [B]: title2
-    - [Main Label, 1] Main Topic 2 [1]
-    - [Main Label, 1] Main Topic 3
-        - [Sub label 3] Subtopic 1
+    - Main Topic 2 [1]
+    - Main Topic 3
+        - Subtopic 1
             - Subtopic 1 [^3][S1]
             - Subtopic 2 [B][S1][S2]
             - Subtopic 3 [B][S1][S2]
@@ -536,7 +536,7 @@ export const expectedOutputXMindMark =
                 - Subtopic 2
                 - Subtopic 3
             [S2]: Summary 2
-        - [Sub label 3] Subtopic 2
-        - [Sub label 3] Subtopic 3
-    - [Main Label, 1] Main Topic 4 [3]
+        - Subtopic 2
+        - Subtopic 3
+    - Main Topic 4 [3]
 `
