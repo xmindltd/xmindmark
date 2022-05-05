@@ -9,7 +9,7 @@
   "files": [
     "dist/**/*"
   ],
-  "types": "./dist/index.d.ts",
+  "types": "./dist/src/index.d.ts",
   "scripts": {
     "serve": "tsc --watch --sourceMap",
     "build": "yarn build:tsc && yarn build:umd",
