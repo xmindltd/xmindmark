@@ -2,7 +2,7 @@ import { Command } from 'commander'
 import { ensureDirSync, existsSync, readFileSync, removeSync, writeFileSync } from 'fs-extra'
 import { parse, resolve } from 'path'
 import { cacheDir, version } from '../config'
-import { hasContentPipedIn } from '../utils'
+import { hasContentPipedIn, SUPPORT_FORMAT } from '../utils'
 import { convert, Convertion, getConverterByFormat } from './convertion'
 import { CLIOptions, formatOption, outputOption } from './options'
 import { filesArgument } from './arguments'
@@ -44,9 +44,11 @@ export const fromCommand = new Command('from')
   .description('Generate .xmindmark file from other types of file')
   .action(fromActionHandler)
 
-export async function mainActionHandler(files: string[], options: CLIOptions) {
+export async function mainActionHandler(files: string[], options: CLIOptions, command: Command) {  
+  if (files.length === 0) command.help()
+
   const { format, outputDir } = options
-    
+
   let convertions: Convertion[]
 
   if (await hasContentPipedIn()) {
