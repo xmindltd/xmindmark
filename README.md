@@ -6,7 +6,7 @@ Just like everyone can use mind mapping software to organize ideas and improve e
 
 XMindMark files are written in plain text, which means that you can describe a mind map faster using any text editor at any time anywhere, like:
 
-```XMindMark
+```xmindmark
 Seasons
 - Spring
 - Summer
@@ -24,7 +24,7 @@ We provide [xmindmark](https://github.com/xmindltd/xmindmark) to help you conver
 
 For an XMindMark file with the following content,
 
-```XMindMark
+```xmindmark
 Seasons
 - Spring
 - Summer
@@ -94,7 +94,7 @@ In the case above, a `.svg` file will be generated in your working directory.
 > xmindmark --outputDir ./out <your-xmindmark-file>
 ```
 
-You can use `-o` or `--outputDir` flag to specify the output directory where the generated file will be placed. Both relative and absolute paths are supported.
+You can use `-o` or `--outputDir` flag to specify the output directory where the generated file will be placed. Either relative or absolute paths are supported.
 
 #### Get more information
 
@@ -142,7 +142,7 @@ Currently, xmindmark only supports converting `string` content to [`ArrayBuffer`
 Converting XMindMark files to `.svg` files relies on a graphical environment, so when xmindmark converts an XMindMark file to a `.svg` file for the every first time, it must complete the following preparations:
 
 1. Download a *bundled version* (specified [here](https://github.com/puppeteer/puppeteer/#q-which-chromium-version-does-puppeteer-use)) of Chromium by [puppeteer-core](https://www.npmjs.com/package/puppeteer-core).
-2. Download the mind map rendering engine from XMind official website: <https://assets.xmind.net>.
+2. Download the mind map rendering engine from XMind official website: https://assets.xmind.net.
 
 These downloads will be cached in the local disk. The next time, xmindmark will just start converting if the cache is still valid.
 
