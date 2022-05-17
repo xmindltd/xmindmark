@@ -6,7 +6,7 @@ Just like everyone can use mind mapping software to organize ideas and improve e
 
 XMindMark files are written in plain text, which means that you can describe a mind map faster using any text editor at any time anywhere, like:
 
-```
+```xmindmark
 Seasons
 - Spring
 - Summer
@@ -14,27 +14,30 @@ Seasons
 - Winter
 ```
 
-For more infomation about **XMindMark syntax**, please visit [XMindMark specification](docs/specification.md).
+For more information about **XMindMark syntax**, please visit [XMindMark specification](docs/specification.md).
 
 The recommended way to save a XMindMark file is to use `.xmindmark` as its extension name, though you can use any other names as you like. If you are developing an application that distributes or generates XMindMark files, you're encouraged to use `application/vnd.xmind.xmindmark` as the [mime type](https://en.wikipedia.org/wiki/Media_type), or `org.xmind.openformat.xmindmark` as the [UTI](https://developer.apple.com/documentation/uniformtypeidentifiers).
 
 ## From XMindMark to Mind Map
 
-We provide [xmindmark](https://github.com/xmindltd/xmindmark) to helps you convert XMindMark files into various forms of mind maps easily.
+We provide [xmindmark](https://github.com/xmindltd/xmindmark) to help you convert XMindMark files into various forms of mind maps easily.
 
 For an XMindMark file with the following content,
-```
+
+```xmindmark
 Seasons
 - Spring
 - Summer
 - Autumn
 - Winter
 ```
+
 you can easily convert it to a graphical mind map using [xmindmark](https://github.com/xmindltd/xmindmark):
 
 ![seasons.svg](docs/seasons.svg)
 
 See also:
+
 - [Use xmindmark as a CLI program](#use-xmindmark-as-a-cli-program)
 - [Use xmindmark as a Javascript library](#use-xmindmark-as-a-javascript-library)
 - [Roadmap](#roadmap)
@@ -43,9 +46,10 @@ See also:
 ### Use xmindmark as a CLI program
 
 #### Install
+
 Make sure [Node.js](https://nodejs.org) and [npm](https://www.npmjs.com/) is available on your computer, and run the command below in your command line program:
 
-```
+```bash
 npm install -g xmindmark
 ```
 
@@ -73,7 +77,8 @@ This command has the same effect as the previous one.
 > xmindmark --format svg <your-xmindmark-file> 
 ```
 
-You can use `-f` or `--format` flag to specify the target format of the output file. So far xmindmark supports these target formats:
+You can use the `-f` or `--format` flag to specify the target format of the output file. So far xmindmark supports these target formats:
+
 - `xmind`
 - `svg`
 
@@ -89,9 +94,10 @@ In the case above, a `.svg` file will be generated in your working directory.
 > xmindmark --outputDir ./out <your-xmindmark-file>
 ```
 
-You can use `-o` or `--outputDir` flag to specify the output directory where the generated file will be placed. Both relative and absolute path are supported.
+You can use `-o` or `--outputDir` flag to specify the output directory where the generated file will be placed. Either relative or absolute paths are supported.
 
 #### Get more information
+
 ```bash
 > xmindmark -h
 # or
@@ -101,6 +107,7 @@ You can use `-o` or `--outputDir` flag to specify the output directory where the
 ### Use xmindmark as a Javascript library
 
 #### Install
+
 ```bash
 > npm install xmindmark -S
 ```
@@ -124,7 +131,7 @@ Currently, xmindmark only supports converting `string` content to [`ArrayBuffer`
 
 ### Roadmap
 
-- **Default theme**. Generate files with pretty color theme. 
+- **Default theme**. Generate files with a pretty color theme.
 - **Syntax parser API**. Improve and expose the parser API to allow developers to obtain more detailed syntax and semantic information.
 - **Editor language support**. Allow users to interact with XMindMark files easily and gracefully in text editors like Visual Studio Code.
 
